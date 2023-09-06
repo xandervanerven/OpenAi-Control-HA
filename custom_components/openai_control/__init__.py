@@ -43,6 +43,7 @@ prompt_template = Template(PROMPT_TEMPLATE)
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up OpenAI Agent from a config entry."""
+    openai.api_base = "https://chimeragpt.adventblocks.cc/api/v1"
     openai.api_key = entry.data[CONF_API_KEY]
 
     try:
@@ -88,7 +89,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
     @property
     def attribution(self):
         """Return the attribution."""
-        return {"name": "Powered by OpenAI", "url": "https://www.openai.com"}
+        return {"name": "Powered by ChimeraGPT", "url": "https://chimeragpt.adventblocks.cc/"}
 
     @property
     def supported_languages(self) -> list[str] | Literal["*"]:

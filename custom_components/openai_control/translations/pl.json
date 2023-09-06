@@ -1,0 +1,20 @@
+{
+    "config": {
+      "abort": {
+        "single_instance_allowed": "Wtyczka jest już skonfigurowana. Tylko jedna instancja jest dozwolona."
+      },
+      "error": {
+        "cannot_connect": "Nieudane połączenie",
+        "invalid_auth": "Niepoprawne dane uwierzytelniające",
+        "unknown": "Niespodziewany problem"
+      },
+      "step": {
+        "user": {
+          "data": {
+            "api_key": "Klucz API"
+          }
+        }
+      }
+    }
+  }
+  
