@@ -254,13 +254,24 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
         if json_response is not None:
 
             # call the needed services on the specific entities
+            call_action = None
+           
 
             try:
                 for entity in json_response["entities"]:
-                    # TODO: make this support more than just lights
-                    await self.hass.services.async_call('light', entity['action'], {'entity_id': entity['id']})
-                    _LOGGER.debug('ACTION: %s', entity['action'])
-                    _LOGGER.debug('ID: %s', entity['id'])
+                    
+                    entity_id = entity['id']
+                    entity_action =  entity['action']
+
+                    if text.startswith("switch."):
+                        call_action = "switch"
+                    else if text.startswith("light."):
+                        call_action = "light"
+                    
+                    await self.hass.services.async_call(call_action, entity_action, {'entity_id': entity_id})
+
+                    _LOGGER.debug('ACTION: %s', entity_action)
+                    _LOGGER.debug('ID: %s', entity_id)
             except KeyError as err:
                 _LOGGER.warn('No entities detected for prompt %s', user_input.text)
 
