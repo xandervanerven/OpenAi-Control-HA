@@ -143,10 +143,10 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
         """ Entities """
 
         # Get all entities exposed to the Conversation Assistant
-        # NOTE: for the first release only lights are supported
+        # NOTE: for the first release only lights and switches are supported
 
         registry = entity_registry.async_get(self.hass)
-        entity_ids = self.hass.states.async_entity_ids('light')
+        entity_ids = self.hass.states.async_entity_ids(['light', 'switch'])
 
         entities_template = ''
 
