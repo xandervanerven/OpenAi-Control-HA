@@ -39,3 +39,5 @@ DEFAULT_TOP_P = 1
 
 CONF_TEMPERATURE = "temperature"
 DEFAULT_TEMPERATURE = 0.5
+
+CHIMERAGPT_ENDPOINT = "https://chimeragpt.adventblocks.cc/api/v1"

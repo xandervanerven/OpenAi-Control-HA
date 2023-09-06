@@ -33,6 +33,7 @@ from .const import (
     DEFAULT_TEMPERATURE,
     DEFAULT_TOP_P,
     DOMAIN,
+    CHIMERAGPT_ENDPOINT
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -59,6 +60,7 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> None:
 
     Data has the keys from STEP_USER_DATA_SCHEMA with values provided by the user.
     """
+    openai.api_base = CHIMERAGPT_ENDPOINT
     openai.api_key = data[CONF_API_KEY]
     await hass.async_add_executor_job(partial(openai.Engine.list, request_timeout=10))
 
