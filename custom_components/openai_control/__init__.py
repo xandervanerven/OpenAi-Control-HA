@@ -206,7 +206,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                 max_tokens=max_tokens,
                 top_p=top_p,
                 temperature=temperature,
-                #user=conversation_id,
+                user=conversation_id
             )
         except error.OpenAIError as err:
             intent_response = intent.IntentResponse(language=user_input.language)
