@@ -265,7 +265,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
 
                     if entity_id.startswith("switch."):
                         call_action = "switch"
-                    else if entity_id.startswith("light."):
+                    elif entity_id.startswith("light."):
                         call_action = "light"
                     
                     await self.hass.services.async_call(call_action, entity_action, {'entity_id': entity_id})
