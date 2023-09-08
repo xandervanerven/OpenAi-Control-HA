@@ -33,8 +33,7 @@ from .const import (
     DEFAULT_TEMPERATURE,
     DEFAULT_TOP_P,
     ENTITY_TEMPLATE,
-    PROMPT_TEMPLATE,
-    CHIMERAGPT_ENDPOINT
+    PROMPT_TEMPLATE
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -44,7 +43,6 @@ prompt_template = Template(PROMPT_TEMPLATE)
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up OpenAI Agent from a config entry."""
-    openai.api_base = CHIMERAGPT_ENDPOINT
     openai.api_key = entry.data[CONF_API_KEY]
 
     try:
