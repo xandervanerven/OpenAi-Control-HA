@@ -123,6 +123,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
 
         raw_prompt = self.entry.options.get(CONF_PROMPT, DEFAULT_PROMPT)
         model = self.entry.options.get(CONF_CHAT_MODEL, DEFAULT_CHAT_MODEL)
+        PROMPT_LANGUAGE = self.entry.options.get(PROMPT_LANGUAGE, DEFAULT_PROMPT_LANGUAGE)
         max_tokens = self.entry.options.get(CONF_MAX_TOKENS, DEFAULT_MAX_TOKENS)
         top_p = self.entry.options.get(CONF_TOP_P, DEFAULT_TOP_P)
         temperature = self.entry.options.get(CONF_TEMPERATURE, DEFAULT_TEMPERATURE)
