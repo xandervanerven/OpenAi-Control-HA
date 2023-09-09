@@ -1,13 +1,13 @@
 {
   "domain": "openai_control",
-  "name": "OpenAI Conrtrol over ChimeraGPT endpoint",
-  "codeowners": ["@alanjames1987", "@cziter15"],
+  "name": "OpenAI Conrtrol",
+  "codeowners": ["@xandervanerven"],
   "config_flow": true,
   "dependencies": ["conversation"],
-  "documentation": "https://github.com/alanjames1987/OpenAI-Action-HA",
+  "documentation": "https://github.com/xandervanerven/OpenAi-Control-HA",
   "integration_type": "service",
   "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/alanjames1987/OpenAI-Action-HA/issues",
+  "issue_tracker": "https://github.com/xandervanerven/OpenAi-Control-HA/issues",
   "requirements": ["openai"],
   "version": "v0.0.1",
   "loggers": ["custom_components.openai_control"]
