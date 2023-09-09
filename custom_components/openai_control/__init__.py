@@ -180,13 +180,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                 hs_color = status_object.attributes.get('hs_color', None)
 
                 # Basislijst met services
-                services = ['toggle', 'turn_off', 'turn_on']
-                if brightness is not None:
-                    # Gebruik "turn_on" met een helderheidsparameter om de helderheid in te stellen.
-                    services.append('turn_on')
-                if hs_color is not None or color_temp_kelvin is not None:
-                    # Gebruik "turn_on" met kleurparameters om de kleur in te stellen.
-                    services.append('turn_on')
+                services = ['toggle', 'turn_off', 'turn_on']  # 'turn_on' is al aanwezig voor zowel helderheid als kleur.
 
                 # Update the entity_template population code.
                 entities_template += entity_template.substitute(
