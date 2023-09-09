@@ -88,7 +88,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
     @property
     def attribution(self):
         """Return the attribution."""
-        return {"name": "Powered by ChimeraGPT", "url": "https://chimeragpt.adventblocks.cc/"}
+        return {"name": "Powered by OpenAi", "url": "https://openai.com"}
 
     @property
     def supported_languages(self) -> list[str] | Literal["*"]:
