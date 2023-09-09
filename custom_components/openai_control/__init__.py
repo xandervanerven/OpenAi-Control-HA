@@ -174,17 +174,19 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                 continue
 
             if DEFAULT_PROMPT_LANGUAGE == "test":
-                 # Extract brightness and color if they exist.
-                brightness = status_object.attributes.get('brightness', '')
-                color_temp_kelvin = status_object.attributes.get('color_temp_kelvin', '')
-                hs_color = ",".join(map(str, status_object.attributes.get('hs_color', '')))
+                # Extract brightness and color if they exist.
+                brightness = status_object.attributes.get('brightness', None)
+                color_temp_kelvin = status_object.attributes.get('color_temp_kelvin', None)
+                hs_color = status_object.attributes.get('hs_color', None)
 
-                # Add more services if you need them
+                # Basislijst met services
                 services = ['toggle', 'turn_off', 'turn_on']
-                if brightness:
-                    services.append('set_brightness')
-                if hs_color or color_temp_kelvin:
-                    services.append('set_color')
+                if brightness is not None:
+                    # Gebruik "turn_on" met een helderheidsparameter om de helderheid in te stellen.
+                    services.append('turn_on')
+                if hs_color is not None or color_temp_kelvin is not None:
+                    # Gebruik "turn_on" met kleurparameters om de kleur in te stellen.
+                    services.append('turn_on')
 
                 # Update the entity_template population code.
                 entities_template += entity_template.substitute(
@@ -192,9 +194,9 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                     name=entity.name or entity_id,
                     status=status_string or "unknown",
                     action=','.join(services),
-                    brightness=brightness,
-                    color_temp_kelvin=color_temp_kelvin,
-                    hs_color=hs_color
+                    brightness=brightness if brightness is not None else "",
+                    color_temp_kelvin=color_temp_kelvin if color_temp_kelvin is not None else "",
+                    hs_color=",".join(map(str, hs_color)) if hs_color is not None else ""
                 )
             else:
                 # get the status string
