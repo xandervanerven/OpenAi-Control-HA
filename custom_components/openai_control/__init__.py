@@ -33,20 +33,26 @@ from .const import (
     DEFAULT_TEMPERATURE,
     DEFAULT_TOP_P,
     ENTITY_TEMPLATE,
+    TEST_ENTITY_TEMPLATE,
     PROMPT_TEMPLATE,
     PROMPT_LANGUAGE,
     DUTCH_PROMPT_TEMPLATE,
+    TEST_TEMPLATE,
     DEFAULT_PROMPT_LANGUAGE
 )
 
 _LOGGER = logging.getLogger(__name__)
-
-entity_template = Template(ENTITY_TEMPLATE)
+if DEFAULT_PROMPT_LANGUAGE == "test":
+    entity_template = Template(TEST_ENTITY_TEMPLATE)
+else:   
+    entity_template = Template(ENTITY_TEMPLATE)
 # prompt_template = Template(PROMPT_TEMPLATE)
 
 # Controleer de waarde van DEFAULT_PROMPT_LANGUAGE en wijs de juiste template toe
 if DEFAULT_PROMPT_LANGUAGE == "Dutch":
     prompt_template = Template(DUTCH_PROMPT_TEMPLATE)
+elif DEFAULT_PROMPT_LANGUAGE == "test":
+    prompt_template = Template(TEST_TEMPLATE)
 else:  # We nemen aan dat elke andere waarde standaard naar "English" verwijst
     prompt_template = Template(PROMPT_TEMPLATE)
 
@@ -167,20 +173,44 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
             if entity.options['conversation']['should_expose'] is not True:
                 continue
 
-            # get the status string
-            status_object = self.hass.states.get(entity_id)
-            status_string = status_object.state
+            if DEFAULT_PROMPT_LANGUAGE == "test":
+                 # Extract brightness and color if they exist.
+                brightness = status_object.attributes.get('brightness', '')
+                color_temp_kelvin = status_object.attributes.get('color_temp_kelvin', '')
+                hs_color = ",".join(map(str, status_object.attributes.get('hs_color', '')))
 
-            # TODO: change this to dynamic call once more than lights are supported
-            services = ['toggle', 'turn_off', 'turn_on']
+                # Add more services if you need them
+                services = ['toggle', 'turn_off', 'turn_on']
+                if brightness:
+                    services.append('set_brightness')
+                if hs_color or color_temp_kelvin:
+                    services.append('set_color')
 
-            # append the entitites tempalte
-            entities_template += entity_template.substitute(
-                id=entity_id,
-                name=entity.name or entity_id,
-                status=status_string or "unknown",
-                action=','.join(services),
-            )
+                # Update the entity_template population code.
+                entities_template += entity_template.substitute(
+                    id=entity_id,
+                    name=entity.name or entity_id,
+                    status=status_string or "unknown",
+                    action=','.join(services),
+                    brightness=brightness,
+                    color_temp_kelvin=color_temp_kelvin,
+                    hs_color=hs_color
+                )
+            else:
+                # get the status string
+                status_object = self.hass.states.get(entity_id)
+                status_string = status_object.state
+
+                # TODO: change this to dynamic call once more than lights are supported
+                services = ['toggle', 'turn_off', 'turn_on']
+
+                # append the entitites tempalte
+                entities_template += entity_template.substitute(
+                    id=entity_id,
+                    name=entity.name or entity_id,
+                    status=status_string or "unknown",
+                    action=','.join(services),
+                )
 
         # generate the prompt using the prompt_template
         prompt_render = prompt_template.substitute(

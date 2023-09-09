@@ -4,6 +4,8 @@ DOMAIN = "openai_control"
 
 ENTITY_TEMPLATE = """$id<>$name<>$status<>$action
 """
+TEST_ENTITY_TEMPLATE = """$id<>$name<>$status<>$action<>$brightness<>$color_temp_kelvin<>$hs_color
+"""
 
 PROMPT_TEMPLATE = """Below is a list of devices, containing the device id, name, state, and actions to perform.
 The sections of the string are delimited by the string "<>"
@@ -38,6 +40,24 @@ Als de prompt een opdracht is, bepaal dan welke entities betrekking hebben op de
 Antwoord enkel in het formaat van het bovenstaande JSON Template.
 Vul het "assistant" veld in met een antwoord in natuurlijke taal voor de actie die wordt ondernomen.
 Antwoord alleen met het JSON Template.
+"""
+
+TEST_TEMPLATE = """Below is a list of devices, containing the device id, name, state, actions to perform, brightness, color temperature (in Kelvin), and HS color. The sections of the string are delimited by the string "<>"
+
+Entities:
+$entities
+
+Prompt: "$prompt"
+
+JSON Template: { "entities": [ { "id": "", "action": "", "brightness": "", "color_temp_kelvin": "", "hs_color": "" } ], "assistant": "" }
+
+Determine if the above prompt is a command related to the above entities. Respond only in JSON.
+
+If the prompt is a command then determine which entities relate to the above prompt and which action should be taken on those entities. Additionally, determine the desired brightness, color temperature or HS color if mentioned.
+
+Respond only in the format of the above JSON Template.
+Fill in the "assistant" field as a natural language response for the action being taken.
+Respond only with the JSON Template.
 """
 
 """Options"""
