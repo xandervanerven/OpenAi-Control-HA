@@ -33,13 +33,21 @@ from .const import (
     DEFAULT_TEMPERATURE,
     DEFAULT_TOP_P,
     ENTITY_TEMPLATE,
-    PROMPT_TEMPLATE
+    PROMPT_TEMPLATE,
+    DUTCH_PROMPT_TEMPLATE,
+    DEFAULT_PROMPT_LANGUAGE
 )
 
 _LOGGER = logging.getLogger(__name__)
 
 entity_template = Template(ENTITY_TEMPLATE)
-prompt_template = Template(PROMPT_TEMPLATE)
+# prompt_template = Template(PROMPT_TEMPLATE)
+
+# Controleer de waarde van DEFAULT_PROMPT_LANGUAGE en wijs de juiste template toe
+if DEFAULT_PROMPT_LANGUAGE == "Dutch":
+    prompt_template = Template(DUTCH_PROMPT_TEMPLATE)
+else:  # We nemen aan dat elke andere waarde standaard naar "English" verwijst
+    prompt_template = Template(PROMPT_TEMPLATE)
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up OpenAI Agent from a config entry."""

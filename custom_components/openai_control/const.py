@@ -22,6 +22,23 @@ Respond only in the format of the above JSON Template.
 Fill in the "assistant" field as a natural language responds for the action being taken.
 Respond only with the JSON Template.
 """
+DUTCH_PROMPT_TEMPLATE = """Hieronder staat een lijst van devices, met daarin de device id, name, state en acties die uitgevoerd moeten worden.
+De secties van de string worden gescheiden door de string "<>"
+
+Entities:
+$entities
+
+Prompt: "$prompt"
+
+JSON Template: { "entities": [ { "id": "", "action": "" } ], "assistant": "" }
+
+Bepaal of de bovenstaande prompt een opdracht is die gerelateerd is aan de bovengenoemde entities. Antwoord alleen in JSON.
+
+Als de prompt een opdracht is, bepaal dan welke entities betrekking hebben op de bovenstaande prompt en welke actie ondernomen moet worden voor die entities.
+Antwoord enkel in het formaat van het bovenstaande JSON Template.
+Vul het "assistant" veld in met een antwoord in natuurlijke taal voor de actie die wordt ondernomen.
+Antwoord alleen met het JSON Template.
+"""
 
 """Options"""
 
@@ -30,6 +47,9 @@ DEFAULT_PROMPT = """This smart home is controlled by Home Assistant."""
 
 CONF_CHAT_MODEL = "chat_model"
 DEFAULT_CHAT_MODEL = "gpt-3.5-turbo"
+
+PROMPT_LANGUAGE = "Prompt language"
+DEFAULT_PROMPT_LANGUAGE = "English"
 
 CONF_MAX_TOKENS = "max_tokens"
 DEFAULT_MAX_TOKENS = 250

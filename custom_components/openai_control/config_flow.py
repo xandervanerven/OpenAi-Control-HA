@@ -32,7 +32,9 @@ from .const import (
     DEFAULT_PROMPT,
     DEFAULT_TEMPERATURE,
     DEFAULT_TOP_P,
-    DOMAIN
+    DOMAIN,
+    PROMPT_LANGUAGE,
+    DEFAULT_PROMPT_LANGUAGE
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -47,6 +49,7 @@ DEFAULT_OPTIONS = types.MappingProxyType(
     {
         CONF_PROMPT: DEFAULT_PROMPT,
         CONF_CHAT_MODEL: DEFAULT_CHAT_MODEL,
+        PROMPT_LANGUAGE: DEFAULT_PROMPT_LANGUAGE
         CONF_MAX_TOKENS: DEFAULT_MAX_TOKENS,
         CONF_TOP_P: DEFAULT_TOP_P,
         CONF_TEMPERATURE: DEFAULT_TEMPERATURE,
@@ -140,6 +143,14 @@ def openai_config_option_schema(options: MappingProxyType[str, Any]) -> dict:
                 "suggested_value": options.get(CONF_CHAT_MODEL, DEFAULT_CHAT_MODEL)
             },
             default=DEFAULT_CHAT_MODEL,
+        ): str,
+        vol.Optional(
+            PROMPT_LANGUAGE,
+            description={
+                # New key in HA 2023.4
+                "suggested_value": options.get(PROMPT_LANGUAGE, DEFAULT_PROMPT_LANGUAGE)
+            },
+            default=DEFAULT_PROMPT_LANGUAGE,
         ): str,
         vol.Optional(
             CONF_MAX_TOKENS,
