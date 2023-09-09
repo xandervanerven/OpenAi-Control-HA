@@ -174,6 +174,10 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                 continue
 
             if DEFAULT_PROMPT_LANGUAGE == "test":
+                # get the status string
+                status_object = self.hass.states.get(entity_id)
+                status_string = status_object.state
+
                 # Extract brightness and color if they exist.
                 brightness = status_object.attributes.get('brightness', None)
                 color_temp_kelvin = status_object.attributes.get('color_temp_kelvin', None)
@@ -291,23 +295,52 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
             call_action = None
            
 
+            # try:
+            #     for entity in json_response["entities"]:
+                    
+            #         entity_id = entity['id']
+            #         entity_action =  entity['action']
+
+            #         if entity_id.startswith("switch."):
+            #             call_action = "switch"
+            #         elif entity_id.startswith("light."):
+            #             call_action = "light"
+                    
+            #         await self.hass.services.async_call(call_action, entity_action, {'entity_id': entity_id})
+            #         _LOGGER.info("Executed %s action on entity: %s", entity_action, entity_id)
+
+            #         _LOGGER.debug('ACTION: %s', entity_action)
+            #         _LOGGER.debug('ID: %s', entity_id)
+            # except KeyError as err:
+            #     _LOGGER.warn('No entities detected for prompt %s', user_input.text)
+
+
             try:
                 for entity in json_response["entities"]:
-                    
                     entity_id = entity['id']
-                    entity_action =  entity['action']
+                    entity_action = entity['action']
+                    service_data = {'entity_id': entity_id}
+                    
+                    if DEFAULT_PROMPT_LANGUAGE == "test":
+                        status_object = self.hass.states.get(entity_id)  # Definieer status_object
+
+                        if 'brightness' in entity:
+                            service_data['brightness'] = entity['brightness']
+                        if 'hs_color' in entity:
+                            service_data['hs_color'] = entity['hs_color']
+                        if 'color_temp_kelvin' in entity:
+                            service_data['color_temp'] = entity['color_temp_kelvin']
 
                     if entity_id.startswith("switch."):
                         call_action = "switch"
                     elif entity_id.startswith("light."):
                         call_action = "light"
                     
-                    await self.hass.services.async_call(call_action, entity_action, {'entity_id': entity_id})
+                    await self.hass.services.async_call(call_action, entity_action, service_data)
+                    _LOGGER.info("Executed %s action with data %s on entity: %s", entity_action, service_data, entity_id)
 
-                    _LOGGER.debug('ACTION: %s', entity_action)
-                    _LOGGER.debug('ID: %s', entity_id)
             except KeyError as err:
-                _LOGGER.warn('No entities detected for prompt %s', user_input.text)
+                _LOGGER.warn('Error processing entity: %s. Missing key: %s', entity_id, err)
 
             # resond with the "assistant" field of the json_response
 
