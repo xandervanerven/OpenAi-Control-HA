@@ -147,11 +147,10 @@ def openai_config_option_schema(options: MappingProxyType[str, Any]) -> dict:
         vol.Optional(
             PROMPT_LANGUAGE,
             description={
-                # New key in HA 2023.4
                 "suggested_value": options.get(PROMPT_LANGUAGE, DEFAULT_PROMPT_LANGUAGE)
             },
             default=DEFAULT_PROMPT_LANGUAGE,
-        ): str,
+        ): vol.In(["English", "Dutch", "test"]),
         vol.Optional(
             CONF_MAX_TOKENS,
             description={"suggested_value": options[CONF_MAX_TOKENS]},

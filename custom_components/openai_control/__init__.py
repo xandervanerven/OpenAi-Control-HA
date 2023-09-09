@@ -42,7 +42,7 @@ from .const import (
 )
 
 _LOGGER = logging.getLogger(__name__)
-if DEFAULT_PROMPT_LANGUAGE == "test":
+if PROMPT_LANGUAGE == "test":
     _LOGGER.info("Test mode active")
     entity_template = Template(TEST_ENTITY_TEMPLATE)
 else:   
@@ -50,9 +50,9 @@ else:
 # prompt_template = Template(PROMPT_TEMPLATE)
 
 # Controleer de waarde van DEFAULT_PROMPT_LANGUAGE en wijs de juiste template toe
-if DEFAULT_PROMPT_LANGUAGE == "Dutch":
+if PROMPT_LANGUAGE == "Dutch":
     prompt_template = Template(DUTCH_PROMPT_TEMPLATE)
-elif DEFAULT_PROMPT_LANGUAGE == "test":
+elif PROMPT_LANGUAGE == "test":
     prompt_template = Template(TEST_TEMPLATE)
 else:  # We nemen aan dat elke andere waarde standaard naar "English" verwijst
     prompt_template = Template(PROMPT_TEMPLATE)
@@ -119,7 +119,6 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
 
         raw_prompt = self.entry.options.get(CONF_PROMPT, DEFAULT_PROMPT)
         model = self.entry.options.get(CONF_CHAT_MODEL, DEFAULT_CHAT_MODEL)
-        prompt_language = self.entry.options.get(PROMPT_LANGUAGE, DEFAULT_PROMPT_LANGUAGE)
         max_tokens = self.entry.options.get(CONF_MAX_TOKENS, DEFAULT_MAX_TOKENS)
         top_p = self.entry.options.get(CONF_TOP_P, DEFAULT_TOP_P)
         temperature = self.entry.options.get(CONF_TEMPERATURE, DEFAULT_TEMPERATURE)
@@ -174,7 +173,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
             if entity.options['conversation']['should_expose'] is not True:
                 continue
 
-            if DEFAULT_PROMPT_LANGUAGE == "test":
+            if PROMPT_LANGUAGE == "test":
                 # get the status string
                 status_object = self.hass.states.get(entity_id)
                 status_string = status_object.state
@@ -322,7 +321,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                     entity_action = entity['action']
                     service_data = {'entity_id': entity_id}
                     
-                    if DEFAULT_PROMPT_LANGUAGE == "test":
+                    if PROMPT_LANGUAGE == "test":
                         status_object = self.hass.states.get(entity_id)  # Definieer status_object
 
                         if 'brightness' in entity:
