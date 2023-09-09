@@ -42,6 +42,9 @@ from .const import (
 )
 
 _LOGGER = logging.getLogger(__name__)
+
+_LOGGER.info("PROMPT_LANGUAGE", PROMPT_LANGUAGE)
+
 if PROMPT_LANGUAGE == "test":
     _LOGGER.info("Test mode active")
     entity_template = Template(TEST_ENTITY_TEMPLATE)
@@ -49,7 +52,7 @@ else:
     entity_template = Template(ENTITY_TEMPLATE)
 # prompt_template = Template(PROMPT_TEMPLATE)
 
-# Controleer de waarde van DEFAULT_PROMPT_LANGUAGE en wijs de juiste template toe
+# Controleer de waarde van PROMPT_LANGUAGE en wijs de juiste template toe
 if PROMPT_LANGUAGE == "Dutch":
     prompt_template = Template(DUTCH_PROMPT_TEMPLATE)
 elif PROMPT_LANGUAGE == "test":
