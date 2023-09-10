@@ -184,6 +184,8 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
 
                 _LOGGER.info("status_object  %s ", status_object)
                 _LOGGER.info("status_string  %s ", status_string)
+                _LOGGER.debug("Entity ID: %s, Brightness: %s, HS_Color: %s", entity_id, brightness, hs_color)
+
 
 
                 # Extract brightness and color if they exist.
