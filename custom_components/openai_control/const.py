@@ -53,7 +53,7 @@ Prompt: "$prompt"
 JSON Template: { "entities": [ { "id": "", "action": "", "brightness": "", "hs_color": "" } ], "assistant": "" }
 
 Beoordeel de prompt:
-- Bepaal welke entities relevant zijn, kies ALLEEN uit de entities namen die in de bovenstaande lijst staan.
+- Bepaal welke entities relevant zijn, let goed op de locatie, kies ALLEEN uit de entities namen die in de bovenstaande lijst staan.
 - Bepaal de gewenste actie voor elk entity, controleer de huidige status van een entity voordat je een actie aanbeveelt.
 - Voeg brightness (0-100) toe indien vermeld; zo niet, laat dan leeg.
 - Voeg HS color als "Hue,Saturation" toe indien vermeld; zo niet, laat dan leeg.
