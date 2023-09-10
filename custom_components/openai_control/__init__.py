@@ -22,6 +22,7 @@ from homeassistant.helpers import intent, template, entity_registry
 from homeassistant.util import ulid
 
 from homeassistant.helpers import area_registry
+from homeassistant.helpers import device_registry
 
 from .const import (
     CONF_CHAT_MODEL,
@@ -229,7 +230,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
 
 
         # Stap 1: Haal het entity_registry, device_registry en area_registry op
-        entity_reg = entity_registry.async_get(self.hass)
+        entity_ids = entity_registry.async_get(self.hass)
         device_reg = device_registry.async_get(self.hass)
         area_reg = area_registry.async_get(self.hass)
 
