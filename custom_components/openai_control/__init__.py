@@ -21,9 +21,6 @@ from homeassistant.exceptions import ConfigEntryNotReady, TemplateError
 from homeassistant.helpers import intent, template, entity_registry
 from homeassistant.util import ulid
 
-from homeassistant.helpers import area_registry
-from homeassistant.helpers import device_registry
-
 from .const import (
     CONF_CHAT_MODEL,
     CONF_MAX_TOKENS,
