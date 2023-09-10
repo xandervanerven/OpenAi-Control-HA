@@ -327,6 +327,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                         status_object = self.hass.states.get(entity_id)  # Definieer status_object
 
                         if 'brightness' in entity:
+                            _LOGGER.debug("Brightness value for entity %s: %s, Type: %s", entity_id, entity['brightness'], type(entity['brightness']))
                             service_data['brightness'] = entity['brightness']
                         if 'hs_color' in entity:
                             service_data['hs_color'] = entity['hs_color']
