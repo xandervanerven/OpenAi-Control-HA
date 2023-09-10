@@ -43,7 +43,7 @@ Antwoord alleen met het JSON Template.
 """
 
 TEST_TEMPLATE = """
-Hieronder staat een lijst van devices met hun device id, name, state, actions to perform, brightness en HS color, allemaal gescheiden door "<>"
+Hieronder staat een lijst van devices met hun device id, name, state, actions to perform, brightness(0-255) en HS color(Hue(0-360),Saturation(0-100)), allemaal gescheiden door "<>"
 
 Entities:
 $entities
@@ -55,8 +55,8 @@ JSON Template: { "entities": [ { "id": "", "action": "", "brightness": "", "hs_c
 Beoordeel de prompt:
 - Bepaal welke entities relevant zijn, kies ALLEEN uit de entities namen die in de bovenstaande lijst staan.
 - Bepaal de gewenste actie voor elk entity, controleer de huidige status van een entity voordat je een actie aanbeveelt.
-- Voeg brightness (0-100) toe indien vermeld; zo niet, laat dan leeg.
-- Voeg HS color als "Hue,Saturation" toe indien vermeld; zo niet, laat dan leeg.
+- Voeg brightness (0-255) toe indien gevraagd; zo niet, laat dan leeg.
+- Voeg HS color als "Hue(0-360),Saturation(0-100)" toe indien gevraagd; zo niet, laat dan leeg.
 - Gebruik enkel het bovenstaande JSON Template formaat voor het antwoord.
 - Vul het "assistant" veld in met een uitleg in natuurlijke taal voor de ondernomen actie.
 Antwoord ten alle tijden alleen met het JSON Template.

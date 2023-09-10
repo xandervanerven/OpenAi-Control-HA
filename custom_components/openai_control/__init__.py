@@ -163,61 +163,69 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
         # Get all entities exposed to the Conversation Assistant
         # NOTE: for the first release only lights and switches are supported
 
+        # Verkrijg eerst toegang tot de area_registry en entity_registry.
+        area_registry = hass.helpers.area_registry.async_get(hass)
         registry = entity_registry.async_get(self.hass)
         entity_ids = self.hass.states.async_entity_ids(['light', 'switch'])
 
         entities_template = ''
 
         for entity_id in entity_ids:
-            # get entities from the registry
-            # to determine if they are exposed to the Conversation Assistant
-            # registry entries have the propert "options['conversation']['should_expose']"
+            # haal entiteiten op uit het register
             entity = registry.entities.get(entity_id)
 
+            # Controleer of het apparaat moet worden blootgesteld aan de Conversation Assistant.
             if entity.options['conversation']['should_expose'] is not True:
                 continue
 
+            # Haal het gekoppelde gebied op van het apparaat.
+            linked_area = next((area for area in area_registry.areas if entity_id in area.entity_ids), None)
+            area_name = linked_area.name if linked_area else "unknown"
+
             if PROMPT_LANGUAGE == "test":
-                # get the status string
+                # haal de status string op.
                 status_object = self.hass.states.get(entity_id)
                 status_string = status_object.state
 
                 _LOGGER.info("status_object  %s ", status_object)
                 _LOGGER.info("status_string  %s ", status_string)
 
-                # Extract brightness and color if they exist.
+                # Extraheer brightness en color indien ze bestaan.
                 brightness = status_object.attributes.get('brightness', None)
                 hs_color = status_object.attributes.get('hs_color', None)
 
-                _LOGGER.debug("Entity ID: %s, Brightness: %s, HS_Color: %s", entity_id, brightness, hs_color)
+                _LOGGER.debug("Entity ID: %s, Brightness: %s, HS_Color: %s, Location: ", entity_id, brightness, hs_color, area_name)
 
                 # Basislijst met services
-                services = ['toggle', 'turn_off', 'turn_on']  # 'turn_on' is al aanwezig voor zowel helderheid als kleur.
+                services = ['toggle', 'turn_off', 'turn_on']
 
-                # Update the entity_template population code.
+                # Update de entity_template met de nieuwe informatie.
                 entities_template += entity_template.substitute(
                     id=entity_id,
                     name=entity.name or entity_id,
                     status=status_string or "unknown",
                     action=','.join(services),
                     brightness=brightness if brightness is not None else "",
-                    hs_color=",".join(map(str, hs_color)) if hs_color is not None else ""
+                    hs_color=",".join(map(str, hs_color)) if hs_color is not None else "",
+                    area=area_name  # Voeg dit toe aan je entity_template string.
                 )
             else:
-                # get the status string
+                # haal de status string op.
                 status_object = self.hass.states.get(entity_id)
                 status_string = status_object.state
 
-                # TODO: change this to dynamic call once more than lights are supported
+                # Lijst met services
                 services = ['toggle', 'turn_off', 'turn_on']
 
-                # append the entitites tempalte
+                # append de entitites template
                 entities_template += entity_template.substitute(
                     id=entity_id,
                     name=entity.name or entity_id,
                     status=status_string or "unknown",
                     action=','.join(services),
+                    area=area_name  # Voeg dit ook hier toe.
                 )
+
 
         # generate the prompt using the prompt_template
         prompt_render = prompt_template.substitute(
