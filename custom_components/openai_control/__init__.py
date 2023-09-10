@@ -43,6 +43,9 @@ from .const import (
 
 _LOGGER = logging.getLogger(__name__)
 
+_LOGGER.info("PROMPT_LANGUAGE %s ", PROMPT_LANGUAGE)
+_LOGGER.info("Testing the logs")
+
 if PROMPT_LANGUAGE == "test":
     _LOGGER.info("Test mode active")
     entity_template = Template(TEST_ENTITY_TEMPLATE)
