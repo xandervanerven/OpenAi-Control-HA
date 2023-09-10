@@ -54,8 +54,8 @@ JSON Template: { "entities": [ { "id": "", "action": "", "brightness": "", "hs_c
 
 Beoordeel de prompt:
 1. Als het een opdracht is gerelateerd aan de apparaten:
-   - Bepaal welke entities relevant zijn.
-   - Bepaal de gewenste actie voor elk entity.
+   - Bepaal welke entities relevant zijn, kies ALLEEN uit de entities die in de bovenstaande lijst staan.
+   - Bepaal de gewenste actie voor elk entity, controleer de huidige status van een entity voordat je een actie aanbeveelt.
    - Voeg brightness (0-100) toe indien vermeld; zo niet, laat dan leeg.
    - Voeg HS color als "Hue,Saturation" toe indien vermeld; zo niet, laat dan leeg.
    - Gebruik enkel het bovenstaande JSON Template formaat voor het antwoord.
