@@ -228,22 +228,24 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
         #         )
 
 
-        registry = entity_registry.async_get(self.hass)
-        areas = area_registry.async_get(self.hass)  # Haal de area_registry op
-        entity_ids = self.hass.states.async_entity_ids(['light', 'switch'])
-
-        entities_template = ''
+        # Stap 1: Haal het entity_registry, device_registry en area_registry op
+        entity_reg = entity_registry.async_get(self.hass)
+        device_reg = device_registry.async_get(self.hass)
+        area_reg = area_registry.async_get(self.hass)
 
         for entity_id in entity_ids:
-            # Get entities from the registry
-            entity = registry.entities.get(entity_id)
+            entity = entity_reg.entities.get(entity_id)
 
-            # Voor elke entiteit de bijbehorende gebiedsnaam op
+            # Stap 2: Haal het bijbehorende apparaat op met het device_id van de entiteit
+            device = device_reg.devices.get(entity.device_id) if entity.device_id else None
+
+            # Stap 3: Als het apparaat een area_id heeft, haal dan het bijbehorende gebied op
             area_name = None
-            if entity.area_id:
-                area = areas.areas.get(entity.area_id)
+            if device and device.area_id:
+                area = area_reg.areas.get(device.area_id)
                 if area:
                     area_name = area.name
+
 
             if entity.options['conversation']['should_expose'] is not True:
                 continue
