@@ -182,6 +182,8 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                 status_object = self.hass.states.get(entity_id)
                 status_string = status_object.state
 
+                _LOGGER.info("status_object  %s ", status_object)
+
                 # Extract brightness and color if they exist.
                 brightness = status_object.attributes.get('brightness', None)
                 hs_color = status_object.attributes.get('hs_color', None)
