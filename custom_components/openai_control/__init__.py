@@ -184,13 +184,12 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
 
                 _LOGGER.info("status_object  %s ", status_object)
                 _LOGGER.info("status_string  %s ", status_string)
-                _LOGGER.debug("Entity ID: %s, Brightness: %s, HS_Color: %s", entity_id, brightness, hs_color)
-
-
 
                 # Extract brightness and color if they exist.
                 brightness = status_object.attributes.get('brightness', None)
                 hs_color = status_object.attributes.get('hs_color', None)
+
+                _LOGGER.debug("Entity ID: %s, Brightness: %s, HS_Color: %s", entity_id, brightness, hs_color)
 
                 # Basislijst met services
                 services = ['toggle', 'turn_off', 'turn_on']  # 'turn_on' is al aanwezig voor zowel helderheid als kleur.
