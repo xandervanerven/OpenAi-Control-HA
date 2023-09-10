@@ -234,6 +234,11 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
         device_reg = device_registry.async_get(self.hass)
         area_reg = area_registry.async_get(self.hass)
 
+        store = device_reg._store
+        for attr, value in store.__dict__.items():
+            _LOGGER.info("Store device_reg %s: %s", attr, value)
+
+
         for entity_id in entity_ids:
             entity = entity_ids.entities.get(entity_id)
 
