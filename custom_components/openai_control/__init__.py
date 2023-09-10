@@ -36,14 +36,14 @@ from .const import (
     TEST_ENTITY_TEMPLATE,
     PROMPT_TEMPLATE,
     DUTCH_PROMPT_TEMPLATE,
-    TEST_TEMPLATE,
-    PROMPT_LANGUAGE,
-    DEFAULT_PROMPT_LANGUAGE
+    TEST_TEMPLATE
 )
+
+from .config_flow import LANGUAGE_AND_MODE
 
 _LOGGER = logging.getLogger(__name__)
 
-_LOGGER.info("PROMPT_LANGUAGE %s ", PROMPT_LANGUAGE)
+_LOGGER.info("LANGUAGE_AND_MODE %s ", LANGUAGE_AND_MODE)
 _LOGGER.info("Testing the logs")
 
 if PROMPT_LANGUAGE == "test":

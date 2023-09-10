@@ -92,9 +92,6 @@ DEFAULT_PROMPT = """This smart home is controlled by Home Assistant."""
 CONF_CHAT_MODEL = "chat_model"
 DEFAULT_CHAT_MODEL = "gpt-3.5-turbo"
 
-PROMPT_LANGUAGE = "test"
-DEFAULT_PROMPT_LANGUAGE = "English"
-
 CONF_MAX_TOKENS = "max_tokens"
 DEFAULT_MAX_TOKENS = 250
 

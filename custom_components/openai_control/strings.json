@@ -19,7 +19,6 @@
         "data": {
           "prompt": "Prompt Template",
           "model": "Completion Model",
-          "prompt_language": "Default prompt language (Dutch and English only)",
           "max_tokens": "Maximum tokens to return in response",
           "temperature": "Temperature",
           "top_p": "Top P"
