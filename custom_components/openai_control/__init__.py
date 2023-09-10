@@ -235,7 +235,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
         area_reg = area_registry.async_get(self.hass)
 
         for entity_id in entity_ids:
-            entity = entity_reg.entities.get(entity_id)
+            entity = entity_ids.entities.get(entity_id)
 
             # Stap 2: Haal het bijbehorende apparaat op met het device_id van de entiteit
             device = device_reg.devices.get(entity.device_id) if entity.device_id else None
