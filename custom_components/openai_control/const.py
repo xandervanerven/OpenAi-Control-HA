@@ -43,7 +43,7 @@ Antwoord alleen met het JSON Template.
 """
 
 TEST_TEMPLATE = """
-Below is a list of devices with device id, name, state, possible actions, brightness, and HS color, delimited by "<>"
+Hieronder staat een lijst van apparaten met hun device id, name, state, actions to perform, brightness en HS color, allemaal gescheiden door "<>"
 
 Entities:
 $entities
@@ -52,16 +52,40 @@ Prompt: "$prompt"
 
 JSON Template: { "entities": [ { "id": "", "action": "", "brightness": "", "hs_color": "" } ], "assistant": "" }
 
-Using the above prompt, respond in JSON format.
-
-Identify:
-1. Relevant entities from the prompt.
-2. Desired action for each entity.
-3. Brightness (0-100) if mentioned and supported; leave blank if not.
-4. HS color as "Hue,Saturation" if mentioned and supported; leave blank if not.
-
-Use the above JSON Template format for the response, including a natural language explanation in the "assistant" field.
+Beoordeel de prompt:
+1. Als het een opdracht is gerelateerd aan de apparaten:
+   - Bepaal welke entities relevant zijn.
+   - Bepaal de gewenste actie voor elk entity.
+   - Voeg brightness (0-100) toe indien vermeld; zo niet, laat dan leeg.
+   - Voeg HS color als "Hue,Saturation" toe indien vermeld; zo niet, laat dan leeg.
+   - Gebruik enkel het bovenstaande JSON Template formaat voor het antwoord.
+   - Vul het "assistant" veld in met een uitleg in natuurlijke taal voor de ondernomen actie.
+2. Als het geen opdracht is voor het besturen van een smart home:
+   - Gebruik het bovenstaande JSON Template formaat, maar laat "entities" leeg.
+   - Licht je antwoord toe in het "assistant" veld.
 """
+
+
+# TEST_TEMPLATE = """
+# Below is a list of devices with device id, name, state, possible actions, brightness, and HS color, delimited by "<>"
+
+# Entities:
+# $entities
+
+# Prompt: "$prompt"
+
+# JSON Template: { "entities": [ { "id": "", "action": "", "brightness": "", "hs_color": "" } ], "assistant": "" }
+
+# Using the above prompt, respond in JSON format.
+
+# Identify:
+# 1. Relevant entities from the prompt.
+# 2. Desired action for each entity.
+# 3. Brightness (0-100) if mentioned and supported; leave blank if not.
+# 4. HS color as "Hue,Saturation" if mentioned and supported; leave blank if not.
+
+# Use the above JSON Template format for the response, including a natural language explanation in the "assistant" field.
+# """
 
 """Options"""
 
