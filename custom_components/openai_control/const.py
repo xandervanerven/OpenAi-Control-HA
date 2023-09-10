@@ -43,7 +43,7 @@ Antwoord alleen met het JSON Template.
 """
 
 TEST_TEMPLATE = """
-Hieronder staat een lijst van apparaten met hun device id, name, state, actions to perform, brightness en HS color, allemaal gescheiden door "<>"
+Hieronder staat een lijst van devices met hun device id, name, state, actions to perform, brightness en HS color, allemaal gescheiden door "<>"
 
 Entities:
 $entities
