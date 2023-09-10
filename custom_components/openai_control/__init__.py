@@ -233,6 +233,8 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
         registry = entity_registry.async_get(self.hass)
         areas = area_registry.async_get(self.hass)  # Haal de area_registry op
         entity_ids = self.hass.states.async_entity_ids(['light', 'switch'])
+        
+        _LOGGER.info("areas  %s ", areas)
 
         entities_template = ''
 
@@ -244,6 +246,8 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
             
             # Haal voor elke entiteit de bijbehorende gebiedsnaam op
             area_name = None
+
+            
             if entity.area_id:
                 area = areas.areas.get(entity.area_id)
                 _LOGGER.debug("area: %s", area)
