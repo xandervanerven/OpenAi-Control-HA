@@ -263,7 +263,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                 brightness = status_object.attributes.get('brightness', None)
                 hs_color = status_object.attributes.get('hs_color', None)
 
-                _LOGGER.debug("Entity ID: %s, Brightness: %s, HS_Color: %s", entity_id, brightness, hs_color)
+                _LOGGER.debug("Entity ID: %s, Brightness: %s, HS_Color: %s, Area: %s", entity_id, brightness, hs_color, area)
 
                 # Basislijst met services
                 services = ['toggle', 'turn_off', 'turn_on']
