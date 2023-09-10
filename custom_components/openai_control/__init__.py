@@ -202,7 +202,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
             if entity.options['conversation']['should_expose'] is not True:
                 continue
 
-            if language_and_mode_value == "Test":
+            if "color" in language_and_mode_value:
                 # get the status string
                 status_object = self.hass.states.get(entity_id)
                 status_string = status_object.state
