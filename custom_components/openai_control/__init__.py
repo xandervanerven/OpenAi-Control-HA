@@ -332,7 +332,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                     entity_action = entity['action']
                     service_data = {'entity_id': entity_id}
                     
-                    if language_and_mode_value == "Test":
+                    if "color" in language_and_mode_value:
                         status_object = self.hass.states.get(entity_id)  # Definieer status_object
 
                         if 'brightness' in entity and entity['brightness']:
