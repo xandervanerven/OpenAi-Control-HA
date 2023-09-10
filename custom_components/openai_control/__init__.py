@@ -21,6 +21,8 @@ from homeassistant.exceptions import ConfigEntryNotReady, TemplateError
 from homeassistant.helpers import intent, template, entity_registry
 from homeassistant.util import ulid
 
+from homeassistant.helpers import area_registry
+
 from .const import (
     CONF_CHAT_MODEL,
     CONF_MAX_TOKENS,
@@ -228,9 +230,8 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
 
 
 
-        # Eerst halen we zowel het entity_registry als het area_registry op.
         registry = entity_registry.async_get(self.hass)
-        area_registry = area_registry.async_get(self.hass)
+        areas = area_registry.async_get(self.hass)  # Haal de area_registry op
         entity_ids = self.hass.states.async_entity_ids(['light', 'switch'])
 
         entities_template = ''
@@ -240,16 +241,16 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
             # to determine if they are exposed to the Conversation Assistant
             # registry entries have the propert "options['conversation']['should_expose']"
             entity = registry.entities.get(entity_id)
+            
+            # Haal voor elke entiteit de bijbehorende gebiedsnaam op
+            area_name = None
+            if entity.area_id:
+                area = areas.areas.get(entity.area_id)
+                if area:
+                    area_name = area.name
 
             if entity.options['conversation']['should_expose'] is not True:
                 continue
-
-            # Hier halen we de area van de entiteit op
-            area = None
-            if entity.area_id:
-                area = area_registry.areas.get(entity.area_id)
-                if area:
-                    area = area.name
 
             if PROMPT_LANGUAGE == "test":
                 # get the status string
@@ -263,20 +264,20 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                 brightness = status_object.attributes.get('brightness', None)
                 hs_color = status_object.attributes.get('hs_color', None)
 
-                _LOGGER.debug("Entity ID: %s, Brightness: %s, HS_Color: %s, Area: %s", entity_id, brightness, hs_color, area)
+                _LOGGER.debug("Entity ID: %s, Brightness: %s, HS_Color: %s", entity_id, brightness, hs_color)
 
                 # Basislijst met services
-                services = ['toggle', 'turn_off', 'turn_on']
+                services = ['toggle', 'turn_off', 'turn_on']  # 'turn_on' is al aanwezig voor zowel helderheid als kleur.
 
                 # Update the entity_template population code.
                 entities_template += entity_template.substitute(
                     id=entity_id,
                     name=entity.name or entity_id,
+                    area=area_name or "unknown",  # Voeg area_name toe aan je template
                     status=status_string or "unknown",
                     action=','.join(services),
                     brightness=brightness if brightness is not None else "",
-                    hs_color=",".join(map(str, hs_color)) if hs_color is not None else "",
-                    area=area or "unknown" # Hier voegen we de area toe
+                    hs_color=",".join(map(str, hs_color)) if hs_color is not None else ""
                 )
             else:
                 # get the status string
@@ -286,14 +287,15 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                 # TODO: change this to dynamic call once more than lights are supported
                 services = ['toggle', 'turn_off', 'turn_on']
 
-                # append the entities template
+                # append the entitites tempalte
                 entities_template += entity_template.substitute(
                     id=entity_id,
                     name=entity.name or entity_id,
+                    area=area_name or "unknown",  # Voeg area_name toe aan je template
                     status=status_string or "unknown",
                     action=','.join(services),
-                    area=area or "unknown"  # Hier voegen we de area ook toe voor de 'else' case
                 )
+
 
 
 
