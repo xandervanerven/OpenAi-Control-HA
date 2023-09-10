@@ -228,34 +228,20 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
         #         )
 
 
-
-
         registry = entity_registry.async_get(self.hass)
         areas = area_registry.async_get(self.hass)  # Haal de area_registry op
         entity_ids = self.hass.states.async_entity_ids(['light', 'switch'])
-        
-        areas = area_registry.async_get(self.hass)
-
-        # Log alle attributen en hun waarden van het 'areas' object
-        for attr, value in areas.__dict__.items():
-            _LOGGER.info("Attribute %s: %s", attr, value)
-
 
         entities_template = ''
 
         for entity_id in entity_ids:
-            # get entities from the registry
-            # to determine if they are exposed to the Conversation Assistant
-            # registry entries have the propert "options['conversation']['should_expose']"
+            # Get entities from the registry
             entity = registry.entities.get(entity_id)
-            
-            # Haal voor elke entiteit de bijbehorende gebiedsnaam op
-            area_name = None
 
-            
+            # Voor elke entiteit de bijbehorende gebiedsnaam op
+            area_name = None
             if entity.area_id:
                 area = areas.areas.get(entity.area_id)
-                _LOGGER.debug("area: %s", area)
                 if area:
                     area_name = area.name
 
@@ -263,48 +249,42 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                 continue
 
             if PROMPT_LANGUAGE == "test":
-                # get the status string
                 status_object = self.hass.states.get(entity_id)
                 status_string = status_object.state
 
-                _LOGGER.info("status_object  %s ", status_object)
-                _LOGGER.info("status_string  %s ", status_string)
-
-                # Extract brightness and color if they exist.
+                # Extract brightness and color if they exist
                 brightness = status_object.attributes.get('brightness', None)
                 hs_color = status_object.attributes.get('hs_color', None)
 
                 _LOGGER.debug("Entity ID: %s, Brightness: %s, HS_Color: %s, Area name: %s", entity_id, brightness, hs_color, area_name)
 
-                # Basislijst met services
-                services = ['toggle', 'turn_off', 'turn_on']  # 'turn_on' is al aanwezig voor zowel helderheid als kleur.
+                services = ['toggle', 'turn_off', 'turn_on']
 
-                # Update the entity_template population code.
+                # Update the entity_template population code
                 entities_template += entity_template.substitute(
                     id=entity_id,
                     name=entity.name or entity_id,
-                    area=area_name or "unknown",  # Voeg area_name toe aan je template
+                    area=area_name or "unknown",
                     status=status_string or "unknown",
                     action=','.join(services),
                     brightness=brightness if brightness is not None else "",
                     hs_color=",".join(map(str, hs_color)) if hs_color is not None else ""
                 )
             else:
-                # get the status string
                 status_object = self.hass.states.get(entity_id)
                 status_string = status_object.state
 
-                # TODO: change this to dynamic call once more than lights are supported
                 services = ['toggle', 'turn_off', 'turn_on']
 
-                # append the entitites tempalte
+                # Append the entities template
                 entities_template += entity_template.substitute(
                     id=entity_id,
                     name=entity.name or entity_id,
-                    area=area_name or "unknown",  # Voeg area_name toe aan je template
+                    area=area_name or "unknown",
                     status=status_string or "unknown",
                     action=','.join(services),
                 )
+
 
 
 
