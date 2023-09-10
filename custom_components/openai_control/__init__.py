@@ -246,6 +246,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
             area_name = None
             if entity.area_id:
                 area = areas.areas.get(entity.area_id)
+                _LOGGER.debug("area: %s", area)
                 if area:
                     area_name = area.name
 
@@ -264,7 +265,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                 brightness = status_object.attributes.get('brightness', None)
                 hs_color = status_object.attributes.get('hs_color', None)
 
-                _LOGGER.debug("Entity ID: %s, Brightness: %s, HS_Color: %s", entity_id, brightness, hs_color)
+                _LOGGER.debug("Entity ID: %s, Brightness: %s, HS_Color: %s, Area name: %s", entity_id, brightness, hs_color, area_name)
 
                 # Basislijst met services
                 services = ['toggle', 'turn_off', 'turn_on']  # 'turn_on' is al aanwezig voor zowel helderheid als kleur.
