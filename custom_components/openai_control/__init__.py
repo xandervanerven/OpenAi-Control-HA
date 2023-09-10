@@ -184,7 +184,6 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
 
                 # Extract brightness and color if they exist.
                 brightness = status_object.attributes.get('brightness', None)
-                color_temp_kelvin = status_object.attributes.get('color_temp_kelvin', None)
                 hs_color = status_object.attributes.get('hs_color', None)
 
                 # Basislijst met services
@@ -197,7 +196,6 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                     status=status_string or "unknown",
                     action=','.join(services),
                     brightness=brightness if brightness is not None else "",
-                    color_temp_kelvin=color_temp_kelvin if color_temp_kelvin is not None else "",
                     hs_color=",".join(map(str, hs_color)) if hs_color is not None else ""
                 )
             else:
@@ -332,8 +330,6 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                             service_data['brightness'] = entity['brightness']
                         if 'hs_color' in entity:
                             service_data['hs_color'] = entity['hs_color']
-                        if 'color_temp_kelvin' in entity:
-                            service_data['color_temp'] = entity['color_temp_kelvin']
 
                     if entity_id.startswith("switch."):
                         call_action = "switch"

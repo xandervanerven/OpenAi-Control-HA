@@ -4,7 +4,7 @@ DOMAIN = "openai_control"
 
 ENTITY_TEMPLATE = """$id<>$name<>$status<>$action
 """
-TEST_ENTITY_TEMPLATE = """$id<>$name<>$status<>$action<>$brightness<>$color_temp_kelvin<>$hs_color
+TEST_ENTITY_TEMPLATE = """$id<>$name<>$status<>$action<>$brightness<>$hs_color
 """
 
 PROMPT_TEMPLATE = """Below is a list of devices, containing the device id, name, state, and actions to perform.
