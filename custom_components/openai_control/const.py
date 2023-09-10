@@ -61,8 +61,7 @@ Beoordeel de prompt:
    - Gebruik enkel het bovenstaande JSON Template formaat voor het antwoord.
    - Vul het "assistant" veld in met een uitleg in natuurlijke taal voor de ondernomen actie.
 2. Als het geen opdracht is voor het besturen van een smart home:
-   - Gebruik het bovenstaande JSON Template formaat, maar laat "entities" leeg.
-   - Licht je antwoord toe in het "assistant" veld.
+   - Gebruik het bovenstaande JSON Template formaat, maar laat het helemaal leeg en licht je antwoord toe in het "assistant" veld.
 """
 
 
