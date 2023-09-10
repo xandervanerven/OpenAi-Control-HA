@@ -53,15 +53,12 @@ Prompt: "$prompt"
 JSON Template: { "entities": [ { "id": "", "action": "", "brightness": "", "hs_color": "" } ], "assistant": "" }
 
 Beoordeel de prompt:
-1. Als het een opdracht is gerelateerd aan de apparaten:
-   - Bepaal welke entities relevant zijn, kies ALLEEN uit de entities die in de bovenstaande lijst staan.
-   - Bepaal de gewenste actie voor elk entity, controleer de huidige status van een entity voordat je een actie aanbeveelt.
-   - Voeg brightness (0-100) toe indien vermeld; zo niet, laat dan leeg.
-   - Voeg HS color als "Hue,Saturation" toe indien vermeld; zo niet, laat dan leeg.
-   - Gebruik enkel het bovenstaande JSON Template formaat voor het antwoord.
-   - Vul het "assistant" veld in met een uitleg in natuurlijke taal voor de ondernomen actie.
-2. Als het geen opdracht is voor het besturen van een smart home:
-   - Gebruik het bovenstaande JSON Template formaat, maar laat het helemaal leeg en licht je antwoord toe in het "assistant" veld.
+- Bepaal welke entities relevant zijn, kies ALLEEN uit de entities die in de bovenstaande lijst staan.
+- Bepaal de gewenste actie voor elk entity, controleer de huidige status van een entity voordat je een actie aanbeveelt.
+- Voeg brightness (0-100) toe indien vermeld; zo niet, laat dan leeg.
+- Voeg HS color als "Hue,Saturation" toe indien vermeld; zo niet, laat dan leeg.
+- Gebruik enkel het bovenstaande JSON Template formaat voor het antwoord.
+- Vul het "assistant" veld in met een uitleg in natuurlijke taal voor de ondernomen actie.
 """
 
 
