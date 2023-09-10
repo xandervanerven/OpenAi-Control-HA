@@ -41,25 +41,24 @@ from .const import (
     LANGUAGE_AND_MODE
 )
 
-language_and_mode_value = DEFAULT_LANGUAGE_AND_MODE
 _LOGGER = logging.getLogger(__name__)
 
 _LOGGER.info("Testing the logs")
 
-if language_and_mode_value == "Test":
-    _LOGGER.info("Test mode active")
-    entity_template = Template(TEST_ENTITY_TEMPLATE)
-else:   
-    entity_template = Template(ENTITY_TEMPLATE)
-# prompt_template = Template(PROMPT_TEMPLATE)
+# if language_and_mode_value == "Test":
+#     _LOGGER.info("Test mode active")
+#     entity_template = Template(TEST_ENTITY_TEMPLATE)
+# else:   
+#     entity_template = Template(ENTITY_TEMPLATE)
+# # prompt_template = Template(PROMPT_TEMPLATE)
 
-# Controleer de waarde van language_and_mode_value en wijs de juiste template toe
-if language_and_mode_value == "Dutch":
-    prompt_template = Template(DUTCH_PROMPT_TEMPLATE)
-elif language_and_mode_value == "Test":
-    prompt_template = Template(TEST_TEMPLATE)
-else:  # We nemen aan dat elke andere waarde standaard naar "English" verwijst
-    prompt_template = Template(PROMPT_TEMPLATE)
+# # Controleer de waarde van language_and_mode_value en wijs de juiste template toe
+# if language_and_mode_value == "Dutch":
+#     prompt_template = Template(DUTCH_PROMPT_TEMPLATE)
+# elif language_and_mode_value == "Test":
+#     prompt_template = Template(TEST_TEMPLATE)
+# else:  # We nemen aan dat elke andere waarde standaard naar "English" verwijst
+#     prompt_template = Template(PROMPT_TEMPLATE)
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up OpenAI Agent from a config entry."""
@@ -163,6 +162,21 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
             # add the conversation starter to the begining of the conversation
             # this is to give the assistant more personality
             messages = [{"role": "system", "content": prompt}]
+
+        # Kies de entity_template op basis van language_and_mode_value
+        if language_and_mode_value == "Test":
+            _LOGGER.info("Test mode active")
+            entity_template = Template(TEST_ENTITY_TEMPLATE)
+        else:
+            entity_template = Template(ENTITY_TEMPLATE)
+
+        # Kies de prompt_template op basis van language_and_mode_value
+        if language_and_mode_value == "Dutch":
+            prompt_template = Template(DUTCH_PROMPT_TEMPLATE)
+        elif language_and_mode_value == "Test":
+            prompt_template = Template(TEST_TEMPLATE)
+        else:  
+            prompt_template = Template(PROMPT_TEMPLATE)
 
         """ Entities """
 
