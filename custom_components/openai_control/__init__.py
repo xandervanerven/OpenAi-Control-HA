@@ -326,17 +326,21 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                     if PROMPT_LANGUAGE == "test":
                         status_object = self.hass.states.get(entity_id)  # Definieer status_object
 
-                        if 'brightness' in entity:
+                        if 'brightness' in entity and entity['brightness']:
                             try:
                                 service_data['brightness'] = int(entity['brightness'])
                             except ValueError:
                                 _LOGGER.error("Invalid brightness value for entity: %s. Expected integer or convertible string, got: %s.", entity_id, entity['brightness'])
-                        if 'hs_color' in entity:
+                        if 'hs_color' in entity and entity['hs_color']:
                             try:
-                                hue, saturation = entity['hs_color']
-                                service_data['hs_color'] = (float(hue), float(saturation))
-                            except (ValueError, TypeError):
+                                hs_values = [float(value) for value in entity['hs_color'].split(',')]
+                                if len(hs_values) == 2:
+                                    service_data['hs_color'] = hs_values
+                                else:
+                                    _LOGGER.error("Invalid hs_color value for entity: %s. Expected two convertible strings or numbers separated by a comma, got: %s.", entity_id, entity['hs_color'])
+                            except ValueError:
                                 _LOGGER.error("Invalid hs_color value for entity: %s. Expected two convertible strings or numbers, got: %s.", entity_id, entity['hs_color'])
+
 
 
                     if entity_id.startswith("switch."):
