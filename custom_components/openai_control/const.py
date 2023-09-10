@@ -42,22 +42,25 @@ Vul het "assistant" veld in met een antwoord in natuurlijke taal voor de actie d
 Antwoord alleen met het JSON Template.
 """
 
-TEST_TEMPLATE = """Below is a list of devices, containing the device id, name, state, actions to perform, brightness, color temperature (in Kelvin), and HS color. The sections of the string are delimited by the string "<>"
+TEST_TEMPLATE = """
+Below is a list of devices with device id, name, state, possible actions, brightness, and HS color, delimited by "<>"
 
 Entities:
 $entities
 
 Prompt: "$prompt"
 
-JSON Template: { "entities": [ { "id": "", "action": "", "brightness": "", "color_temp_kelvin": "", "hs_color": "" } ], "assistant": "" }
+JSON Template: { "entities": [ { "id": "", "action": "", "brightness": "", "hs_color": "" } ], "assistant": "" }
 
-Determine if the above prompt is a command related to the above entities. Respond only in JSON.
+Using the above prompt, respond in JSON format.
 
-If the prompt is a command then determine which entities relate to the above prompt and which action should be taken on those entities. Additionally, determine the desired brightness, color temperature or HS color if mentioned.
+Identify:
+1. Relevant entities from the prompt.
+2. Desired action for each entity.
+3. Brightness (0-100) if mentioned and supported; leave blank if not.
+4. HS color as "Hue,Saturation" if mentioned and supported; leave blank if not.
 
-Respond only in the format of the above JSON Template.
-Fill in the "assistant" field as a natural language response for the action being taken.
-Respond only with the JSON Template.
+Use the above JSON Template format for the response, including a natural language explanation in the "assistant" field.
 """
 
 """Options"""
