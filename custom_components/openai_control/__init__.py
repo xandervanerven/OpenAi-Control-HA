@@ -234,7 +234,12 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
         areas = area_registry.async_get(self.hass)  # Haal de area_registry op
         entity_ids = self.hass.states.async_entity_ids(['light', 'switch'])
         
-        _LOGGER.info("areas  %s ", areas)
+        areas = area_registry.async_get(self.hass)
+
+        # Log alle attributen en hun waarden van het 'areas' object
+        for attr, value in areas.__dict__.items():
+            _LOGGER.info("Attribute %s: %s", attr, value)
+
 
         entities_template = ''
 
