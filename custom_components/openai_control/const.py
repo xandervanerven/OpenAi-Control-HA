@@ -4,10 +4,29 @@ DOMAIN = "openai_control"
 
 ENTITY_TEMPLATE = """$id<>$name<>$status<>$action
 """
+COLOR_ENTITY_TEMPLATE = """$id<>$name<>$status<>$action<>$brightness<>$hs_color
+"""
 TEST_ENTITY_TEMPLATE = """$id<>$name<>$status<>$action<>$brightness<>$hs_color
 """
 
 PROMPT_TEMPLATE = """Below is a list of devices, containing the device id, name, state, and actions to perform.
+The sections of the string are delimited by the string "<>"
+
+Entities:
+$entities
+
+Prompt: "$prompt"
+
+JSON Template: { "entities": [ { "id": "", "action": "" } ], "assistant": "" }
+
+Determine if the above prompt is a command related to the above entities. Respond only in JSON.
+
+If the prompt is a command then determine which entities relate to the above prompt and which action should be taken on those entities.
+Respond only in the format of the above JSON Template.
+Fill in the "assistant" field as a natural language responds for the action being taken.
+Respond only with the JSON Template.
+"""
+COLOR_PROMPT_TEMPLATE = """Below is a list of devices, containing the device id, name, state, and actions to perform.
 The sections of the string are delimited by the string "<>"
 
 Entities:
@@ -42,7 +61,7 @@ Vul het "assistant" veld in met een antwoord in natuurlijke taal voor de actie d
 Antwoord alleen met het JSON Template.
 """
 
-TEST_TEMPLATE = """
+DUTCH_COLOR_PROMPT_TEMPLATE = """
 Hieronder staat een lijst van devices met hun device id, name, state, actions to perform, brightness(0-255) en HS color(Hue(0-360),Saturation(0-100)), allemaal gescheiden door "<>"
 
 Entities:
@@ -61,28 +80,26 @@ Beoordeel de prompt, verwerk de opdracht op de volgende manier:
 - Vul het "assistant" veld in met een uitleg in natuurlijke taal voor de ondernomen actie.
 Antwoord ten alle tijden alleen met het JSON Template.
 """
+TEST_PROMPT_TEMPLATE = """
+Below is a list of devices with device id, name, state, possible actions, brightness, and HS color, delimited by "<>"
 
+Entities:
+$entities
 
-# TEST_TEMPLATE = """
-# Below is a list of devices with device id, name, state, possible actions, brightness, and HS color, delimited by "<>"
+Prompt: "$prompt"
 
-# Entities:
-# $entities
+JSON Template: { "entities": [ { "id": "", "action": "", "brightness": "", "hs_color": "" } ], "assistant": "" }
 
-# Prompt: "$prompt"
+Using the above prompt, respond in JSON format.
 
-# JSON Template: { "entities": [ { "id": "", "action": "", "brightness": "", "hs_color": "" } ], "assistant": "" }
+Identify:
+1. Relevant entities from the prompt.
+2. Desired action for each entity.
+3. Brightness (0-100) if mentioned and supported; leave blank if not.
+4. HS color as "Hue,Saturation" if mentioned and supported; leave blank if not.
 
-# Using the above prompt, respond in JSON format.
-
-# Identify:
-# 1. Relevant entities from the prompt.
-# 2. Desired action for each entity.
-# 3. Brightness (0-100) if mentioned and supported; leave blank if not.
-# 4. HS color as "Hue,Saturation" if mentioned and supported; leave blank if not.
-
-# Use the above JSON Template format for the response, including a natural language explanation in the "assistant" field.
-# """
+Use the above JSON Template format for the response, including a natural language explanation in the "assistant" field.
+"""
 
 """Options"""
 

@@ -33,32 +33,20 @@ from .const import (
     DEFAULT_TEMPERATURE,
     DEFAULT_TOP_P,
     ENTITY_TEMPLATE,
-    TEST_ENTITY_TEMPLATE,
+    COLOR_ENTITY_TEMPLATE,
     PROMPT_TEMPLATE,
+    COLOR_PROMPT_TEMPLATE,
     DUTCH_PROMPT_TEMPLATE,
-    TEST_TEMPLATE,
+    DUTCH_COLOR_PROMPT_TEMPLATE,
     DEFAULT_LANGUAGE_AND_MODE,
-    LANGUAGE_AND_MODE
+    LANGUAGE_AND_MODE,
+    TEST_PROMPT_TEMPLATE,
+    TEST_ENTITY_TEMPLATE,
 )
 
 _LOGGER = logging.getLogger(__name__)
 
 _LOGGER.info("Testing the logs")
-
-# if language_and_mode_value == "Test":
-#     _LOGGER.info("Test mode active")
-#     entity_template = Template(TEST_ENTITY_TEMPLATE)
-# else:   
-#     entity_template = Template(ENTITY_TEMPLATE)
-# # prompt_template = Template(PROMPT_TEMPLATE)
-
-# # Controleer de waarde van language_and_mode_value en wijs de juiste template toe
-# if language_and_mode_value == "Dutch":
-#     prompt_template = Template(DUTCH_PROMPT_TEMPLATE)
-# elif language_and_mode_value == "Test":
-#     prompt_template = Template(TEST_TEMPLATE)
-# else:  # We nemen aan dat elke andere waarde standaard naar "English" verwijst
-#     prompt_template = Template(PROMPT_TEMPLATE)
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up OpenAI Agent from a config entry."""
@@ -163,20 +151,37 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
             # this is to give the assistant more personality
             messages = [{"role": "system", "content": prompt}]
 
-        # Kies de entity_template op basis van language_and_mode_value
-        if language_and_mode_value == "Test":
-            _LOGGER.info("Test mode active")
-            entity_template = Template(TEST_ENTITY_TEMPLATE)
-        else:
-            entity_template = Template(ENTITY_TEMPLATE)
+        # Standaardwaarden
+        prompt_template = Template(PROMPT_TEMPLATE)
+        entity_template = Template(ENTITY_TEMPLATE)
 
-        # Kies de prompt_template op basis van language_and_mode_value
-        if language_and_mode_value == "Dutch":
+        # Check voor "color" modus in combinatie met taal
+        if "color" in language_and_mode_value:
+            entity_template = Template(COLOR_ENTITY_TEMPLATE)
+            
+            if "English" in language_and_mode_value:
+                prompt_template = Template(COLOR_PROMPT_TEMPLATE)
+                _LOGGER.info("Mode: English color mode")
+            elif "Dutch" in language_and_mode_value:
+                prompt_template = Template(DUTCH_COLOR_PROMPT_TEMPLATE)
+                _LOGGER.info("Mode: Dutch color mode")
+            else:
+                _LOGGER.warning("Color mode active but unknown language.")
+            
+        elif "English" in language_and_mode_value:
+            _LOGGER.info("Mode: English mode")
+
+        elif "Dutch" in language_and_mode_value:
             prompt_template = Template(DUTCH_PROMPT_TEMPLATE)
+            _LOGGER.info("Mode: Dutch mode")
+
         elif language_and_mode_value == "Test":
-            prompt_template = Template(TEST_TEMPLATE)
-        else:  
-            prompt_template = Template(PROMPT_TEMPLATE)
+            prompt_template = Template(TEST_PROMPT_TEMPLATE)
+            entity_template = Template(TEST_ENTITY_TEMPLATE)
+            _LOGGER.info("Mode: Test mode")
+
+        else:
+            _LOGGER.warning("Default mode active, unknown language or mode value.")
 
         """ Entities """
 
@@ -320,27 +325,6 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
 
             # call the needed services on the specific entities
             call_action = None
-           
-
-            # try:
-            #     for entity in json_response["entities"]:
-                    
-            #         entity_id = entity['id']
-            #         entity_action =  entity['action']
-
-            #         if entity_id.startswith("switch."):
-            #             call_action = "switch"
-            #         elif entity_id.startswith("light."):
-            #             call_action = "light"
-                    
-            #         await self.hass.services.async_call(call_action, entity_action, {'entity_id': entity_id})
-            #         _LOGGER.info("Executed %s action on entity: %s", entity_action, entity_id)
-
-            #         _LOGGER.debug('ACTION: %s', entity_action)
-            #         _LOGGER.debug('ID: %s', entity_id)
-            # except KeyError as err:
-            #     _LOGGER.warn('No entities detected for prompt %s', user_input.text)
-
 
             try:
                 for entity in json_response["entities"]:
