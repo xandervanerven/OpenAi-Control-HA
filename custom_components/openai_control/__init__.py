@@ -36,33 +36,37 @@ from .const import (
     TEST_ENTITY_TEMPLATE,
     PROMPT_TEMPLATE,
     DUTCH_PROMPT_TEMPLATE,
-    TEST_TEMPLATE
+    TEST_TEMPLATE,
+    DEFAULT_LANGUAGE_AND_MODE,
+    LANGUAGE_AND_MODE
 )
 
-from .config_flow import LANGUAGE_AND_MODE
-
+language_and_mode_value = DEFAULT_LANGUAGE_AND_MODE
 _LOGGER = logging.getLogger(__name__)
 
-_LOGGER.info("LANGUAGE_AND_MODE %s ", LANGUAGE_AND_MODE)
 _LOGGER.info("Testing the logs")
 
-if PROMPT_LANGUAGE == "test":
+if language_and_mode_value == "Test":
     _LOGGER.info("Test mode active")
     entity_template = Template(TEST_ENTITY_TEMPLATE)
 else:   
     entity_template = Template(ENTITY_TEMPLATE)
 # prompt_template = Template(PROMPT_TEMPLATE)
 
-# Controleer de waarde van PROMPT_LANGUAGE en wijs de juiste template toe
-if PROMPT_LANGUAGE == "Dutch":
+# Controleer de waarde van language_and_mode_value en wijs de juiste template toe
+if language_and_mode_value == "Dutch":
     prompt_template = Template(DUTCH_PROMPT_TEMPLATE)
-elif PROMPT_LANGUAGE == "test":
+elif language_and_mode_value == "Test":
     prompt_template = Template(TEST_TEMPLATE)
 else:  # We nemen aan dat elke andere waarde standaard naar "English" verwijst
     prompt_template = Template(PROMPT_TEMPLATE)
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up OpenAI Agent from a config entry."""
+
+    global language_and_mode_value
+    language_and_mode_value = entry.options.get(LANGUAGE_AND_MODE, DEFAULT_LANGUAGE_AND_MODE)
+
     openai.api_key = entry.data[CONF_API_KEY]
 
     try:
@@ -118,6 +122,8 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
     async def async_process(
         self, user_input: conversation.ConversationInput
     ) -> conversation.ConversationResult:
+        
+        _LOGGER.info("language_and_mode_value  %s ", language_and_mode_value)
 
         """ Options input """
 
@@ -177,7 +183,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
             if entity.options['conversation']['should_expose'] is not True:
                 continue
 
-            if PROMPT_LANGUAGE == "test":
+            if language_and_mode_value == "Test":
                 # get the status string
                 status_object = self.hass.states.get(entity_id)
                 status_string = status_object.state
@@ -328,7 +334,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                     entity_action = entity['action']
                     service_data = {'entity_id': entity_id}
                     
-                    if PROMPT_LANGUAGE == "test":
+                    if language_and_mode_value == "Test":
                         status_object = self.hass.states.get(entity_id)  # Definieer status_object
 
                         if 'brightness' in entity and entity['brightness']:

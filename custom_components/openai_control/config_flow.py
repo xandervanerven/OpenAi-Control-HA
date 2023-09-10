@@ -33,6 +33,9 @@ from .const import (
     DEFAULT_TEMPERATURE,
     DEFAULT_TOP_P,
     DOMAIN,
+    LANGUAGE_AND_MODE,
+    LANGUAGE_AND_MODE_OPTIONS,
+    DEFAULT_LANGUAGE_AND_MODE
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -47,6 +50,7 @@ DEFAULT_OPTIONS = types.MappingProxyType(
     {
         CONF_PROMPT: DEFAULT_PROMPT,
         CONF_CHAT_MODEL: DEFAULT_CHAT_MODEL,
+        LANGUAGE_AND_MODE: DEFAULT_LANGUAGE_AND_MODE,
         CONF_MAX_TOKENS: DEFAULT_MAX_TOKENS,
         CONF_TOP_P: DEFAULT_TOP_P,
         CONF_TEMPERATURE: DEFAULT_TEMPERATURE,
@@ -143,8 +147,8 @@ def openai_config_option_schema(options: MappingProxyType[str, Any]) -> dict:
         ): str,
         vol.Optional(
             LANGUAGE_AND_MODE,
-            default="Dutch + brightness + color control",
-        ): vol.In(["Dutch + brightness + color control", "English + brightness + color control", "English", "Dutch", "Test"]),
+            default=DEFAULT_LANGUAGE_AND_MODE,
+        ): vol.In(LANGUAGE_AND_MODE_OPTIONS),
         vol.Optional(
             CONF_MAX_TOKENS,
             description={"suggested_value": options[CONF_MAX_TOKENS]},

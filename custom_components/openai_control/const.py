@@ -100,3 +100,14 @@ DEFAULT_TOP_P = 1
 
 CONF_TEMPERATURE = "temperature"
 DEFAULT_TEMPERATURE = 0.5
+
+LANGUAGE_AND_MODE_OPTIONS = [
+    "Dutch + brightness + color control",
+    "English + brightness + color control",
+    "English",
+    "Dutch",
+    "Test",
+]
+
+LANGUAGE_AND_MODE = "language_and_mode"
+DEFAULT_LANGUAGE_AND_MODE = "Dutch + brightness + color control"
