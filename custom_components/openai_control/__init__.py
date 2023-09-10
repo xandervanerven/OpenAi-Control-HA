@@ -183,6 +183,8 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                 status_string = status_object.state
 
                 _LOGGER.info("status_object  %s ", status_object)
+                _LOGGER.info("status_string  %s ", status_string)
+
 
                 # Extract brightness and color if they exist.
                 brightness = status_object.attributes.get('brightness', None)
