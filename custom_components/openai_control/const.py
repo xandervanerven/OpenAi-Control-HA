@@ -70,10 +70,10 @@ Entities: $entities
 
 Elke entiteit heeft een device id, name, state, actions to perform, brightness(0-255), en HS color(Hue(0-360),Saturation(0-100)), gescheiden door "<>". Gebruik deze informatie om de volgende taken uit te voeren:
 
-- Identificeer elke entiteit in de prompt. De locatie of ruimte van de entiteit is altijd te vinden in de naam van de entiteit direct na "light" of "lamp". Bijvoorbeeld, in "keukenlamp_zijkant", is "keuken" de locatie. Baseer je beslissing verder op details zoals kleur en helderheid (fel of zacht).
-- Kies alleen de entiteiten die exact overeenkomen met de beschrijvingen in de prompt.
-- Bepaal de gewenste actie voor elk entity, rekening houdend met de huidige status.
-- Voeg brightness (0-255) toe indien gespecificeerd; anders laat leeg.
+- Identificeer elke entiteit in de prompt. De ruimte van de entiteit is altijd te vinden in de naam van de entiteit direct na "light.", bijvoorbeeld in "keukenlamp_zijkant", is "keuken" de ruimte.
+- Kies alleen de entiteiten die overeenkomen met de omschrijving in de prompt.
+- Bepaal de gewenste actie voor elk entiteit, rekening houdend met de huidige status.
+- Voeg brightness (0-255) toe indien gespecificeerd; anders laat leeg. Let op brightness omschrijvingen zoals fel of zacht.
 - Voeg HS color als "Hue(0-360),Saturation(0-100)" toe indien gespecificeerd; anders laat leeg.
 
 Je antwoord moet voldoen aan het volgende JSON Template formaat:
