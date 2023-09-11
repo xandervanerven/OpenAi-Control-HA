@@ -70,7 +70,7 @@ Entities: $entities
 
 Elke entiteit heeft een device id, name, state, actions to perform, brightness(0-255), en HS color(Hue(0-360),Saturation(0-100)), gescheiden door "<>". Gebruik deze informatie om de volgende taken uit te voeren:
 
-- Identificeer elke entiteit in de prompt, zelfs als er meerdere entiteiten in dezelfde ruimte zijn. Baseer je beslissing op details zoals kleur en helderheid.
+- Identificeer elke entiteit in de prompt. De locatie of ruimte van de entiteit is altijd te vinden in de naam van de entiteit direct na "light" of "lamp". Bijvoorbeeld, in "keukenlamp_zijkant", is "keuken" de locatie. Baseer je beslissing verder op details zoals kleur en helderheid (fel of zacht).
 - Kies alleen de entiteiten die exact overeenkomen met de beschrijvingen in de prompt.
 - Bepaal de gewenste actie voor elk entity, rekening houdend met de huidige status.
 - Voeg brightness (0-255) toe indien gespecificeerd; anders laat leeg.
@@ -79,10 +79,7 @@ Elke entiteit heeft een device id, name, state, actions to perform, brightness(0
 Je antwoord moet voldoen aan het volgende JSON Template formaat:
 { "entities": [ { "id": "", "action": "", "brightness": "", "hs_color": "" } ], "assistant": "" }
 
-In het "assistant" veld, geef een duidelijke uitleg over de uitgevoerde acties.
-
-Voorbeeld: Als de prompt zegt "Maak de keukenlamp_zijkant zachtjes groen (brightness laag), de keukenlamp_midden fel rood (brightness maximaal) en de keukenlamp_plafond fel geel (brightness maximaal)", stel dan de juiste HS color en brightness in voor elk van deze lichten en antwoord volgens het bovengenoemde template.
-"""
+In het "assistant" veld, geef in natuurlijke taal een duidelijke uitleg over de uitgevoerde acties."""
 TEST_PROMPT_TEMPLATE = """
 Below is a list of devices with device id, name, state, possible actions, brightness, and HS color, delimited by "<>"
 
