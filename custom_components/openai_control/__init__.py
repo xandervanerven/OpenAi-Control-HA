@@ -350,8 +350,6 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                             except ValueError:
                                 _LOGGER.error("Invalid hs_color value for entity: %s. Expected two convertible strings or numbers, got: %s.", entity_id, entity['hs_color'])
 
-
-
                     if entity_id.startswith("switch."):
                         call_action = "switch"
                     elif entity_id.startswith("light."):

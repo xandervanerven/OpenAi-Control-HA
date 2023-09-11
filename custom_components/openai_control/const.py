@@ -62,23 +62,26 @@ Antwoord alleen met het JSON Template.
 """
 
 DUTCH_COLOR_PROMPT_TEMPLATE = """
-Hieronder staat een lijst van devices met hun device id, name, state, actions to perform, brightness(0-255) en HS color(Hue(0-360),Saturation(0-100)), allemaal gescheiden door "<>"
-
-Entities:
-$entities
+Op basis van de gegeven prompt, moet je de relevante entiteiten identificeren en de juiste acties uitvoeren.
 
 Prompt: "$prompt"
 
-JSON Template: { "entities": [ { "id": "", "action": "", "brightness": "", "hs_color": "" } ], "assistant": "" }
+Entities: $entities
 
-Beoordeel de prompt, verwerk de opdracht op de volgende manier:
-- Bepaal welke entities relevant zijn, let hierbij goed op de gevraagde locatie en de naam van de entities, kies ALLEEN uit de entities namen die in de bovenstaande lijst staan.
-- Bepaal de gewenste actie voor elk entity, controleer de huidige status van een entity voordat je een actie aanbeveelt.
-- Voeg brightness (0-255) toe indien gevraagd; zo niet, laat dan leeg.
-- Voeg HS color als "Hue(0-360),Saturation(0-100)" toe indien gevraagd; zo niet, laat dan leeg.
-- Gebruik enkel het bovenstaande JSON Template formaat voor het antwoord.
-- Vul het "assistant" veld in met een uitleg in natuurlijke taal voor de ondernomen actie.
-Antwoord ten alle tijden alleen met het JSON Template.
+Elke entiteit heeft een device id, name, state, actions to perform, brightness(0-255), en HS color(Hue(0-360),Saturation(0-100)), gescheiden door "<>". Gebruik deze informatie om de volgende taken uit te voeren:
+
+- Identificeer elke entiteit in de prompt, zelfs als er meerdere entiteiten in dezelfde ruimte zijn. Baseer je beslissing op details zoals kleur en helderheid.
+- Kies alleen de entiteiten die exact overeenkomen met de beschrijvingen in de prompt.
+- Bepaal de gewenste actie voor elk entity, rekening houdend met de huidige status.
+- Voeg brightness (0-255) toe indien gespecificeerd; anders laat leeg.
+- Voeg HS color als "Hue(0-360),Saturation(0-100)" toe indien gespecificeerd; anders laat leeg.
+
+Je antwoord moet voldoen aan het volgende JSON Template formaat:
+{ "entities": [ { "id": "", "action": "", "brightness": "", "hs_color": "" } ], "assistant": "" }
+
+In het "assistant" veld, geef een duidelijke uitleg over de uitgevoerde acties.
+
+Voorbeeld: Als de prompt zegt "Maak de keukenlamp_zijkant zachtjes groen, de keukenlamp_midden fel rood en de keukenlamp_plafond fel geel", stel dan de juiste kleur en helderheid in voor elk van deze lichten en antwoord volgens het bovengenoemde template.
 """
 TEST_PROMPT_TEMPLATE = """
 Below is a list of devices with device id, name, state, possible actions, brightness, and HS color, delimited by "<>"
@@ -127,4 +130,4 @@ LANGUAGE_AND_MODE_OPTIONS = [
 ]
 
 LANGUAGE_AND_MODE = "language_and_mode"
-DEFAULT_LANGUAGE_AND_MODE = "Dutch + brightness + color control"
+DEFAULT_LANGUAGE_AND_MODE = "English"
