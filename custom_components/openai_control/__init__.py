@@ -52,7 +52,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up OpenAI Agent from a config entry."""
 
     global language_and_mode_value
-    language_and_mode_value = entry.options.get(LANGUAGE_AND_MODE, DEFAULT_LANGUAGE_AND_MODE)
+    language_and_mode_value = entry.options.get(LANGUAGE_AND_MODE)
 
     openai.api_key = entry.data[CONF_API_KEY]
 
