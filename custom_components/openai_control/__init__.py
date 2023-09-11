@@ -222,7 +222,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                 # Update the entity_template population code.
                 entities_template += entity_template.substitute(
                     id=entity_id,
-                    name=entity.name or entity_id,
+                    # name=entity.name or entity_id,
                     status=status_string or "unknown",
                     action=','.join(services),
                     brightness=brightness if brightness is not None else "",
@@ -239,7 +239,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                 # append the entitites tempalte
                 entities_template += entity_template.substitute(
                     id=entity_id,
-                    name=entity.name or entity_id,
+                    # name=entity.name or entity_id,
                     status=status_string or "unknown",
                     action=','.join(services),
                 )

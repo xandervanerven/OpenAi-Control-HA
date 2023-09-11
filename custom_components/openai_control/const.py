@@ -2,84 +2,91 @@
 
 DOMAIN = "openai_control"
 
-ENTITY_TEMPLATE = """$id<>$name<>$status<>$action
+ENTITY_TEMPLATE = """$id<>$status<>$action
 """
-COLOR_ENTITY_TEMPLATE = """$id<>$name<>$status<>$action<>$brightness<>$hs_color
+COLOR_ENTITY_TEMPLATE = """$id<>$status<>$action<>$brightness<>$hs_color
 """
-TEST_ENTITY_TEMPLATE = """$id<>$name<>$status<>$action<>$brightness<>$hs_color
-"""
-
-PROMPT_TEMPLATE = """Below is a list of devices, containing the device id, name, state, and actions to perform.
-The sections of the string are delimited by the string "<>"
-
-Entities:
-$entities
-
-Prompt: "$prompt"
-
-JSON Template: { "entities": [ { "id": "", "action": "" } ], "assistant": "" }
-
-Determine if the above prompt is a command related to the above entities. Respond only in JSON.
-
-If the prompt is a command then determine which entities relate to the above prompt and which action should be taken on those entities.
-Respond only in the format of the above JSON Template.
-Fill in the "assistant" field as a natural language responds for the action being taken.
-Respond only with the JSON Template.
-"""
-COLOR_PROMPT_TEMPLATE = """Below is a list of devices, containing the device id, name, state, and actions to perform.
-The sections of the string are delimited by the string "<>"
-
-Entities:
-$entities
-
-Prompt: "$prompt"
-
-JSON Template: { "entities": [ { "id": "", "action": "" } ], "assistant": "" }
-
-Determine if the above prompt is a command related to the above entities. Respond only in JSON.
-
-If the prompt is a command then determine which entities relate to the above prompt and which action should be taken on those entities.
-Respond only in the format of the above JSON Template.
-Fill in the "assistant" field as a natural language responds for the action being taken.
-Respond only with the JSON Template.
-"""
-DUTCH_PROMPT_TEMPLATE = """Hieronder staat een lijst van devices, met daarin de device id, name, state en acties die uitgevoerd moeten worden.
-De secties van de string worden gescheiden door de string "<>"
-
-Entities:
-$entities
-
-Prompt: "$prompt"
-
-JSON Template: { "entities": [ { "id": "", "action": "" } ], "assistant": "" }
-
-Bepaal of de bovenstaande prompt een opdracht is die gerelateerd is aan de bovengenoemde entities. Antwoord alleen in JSON.
-
-Als de prompt een opdracht is, bepaal dan welke entities betrekking hebben op de bovenstaande prompt en welke actie ondernomen moet worden voor die entities.
-Antwoord enkel in het formaat van het bovenstaande JSON Template.
-Vul het "assistant" veld in met een antwoord in natuurlijke taal voor de actie die wordt ondernomen.
-Antwoord alleen met het JSON Template.
+TEST_ENTITY_TEMPLATE = """$id<>$status<>$action<>$brightness<>$hs_color
 """
 
-DUTCH_COLOR_PROMPT_TEMPLATE = """
-Op basis van de gegeven prompt, moet je de relevante entiteiten identificeren en de juiste acties uitvoeren.
+PROMPT_TEMPLATE = """
+Based on the given prompt, you need to identify the relevant entities in the list below and perform the appropriate actions.
 
 Prompt: "$prompt"
 
 Entities: $entities
 
-Elke entiteit heeft een device id, name, state, actions to perform, brightness(0-255), en HS color(Hue(0-360),Saturation(0-100)), gescheiden door "<>". Gebruik deze informatie om de volgende taken uit te voeren:
+Each entity has an entity id, state, possible actions to perform, separated by "<>".
+Use this information to complete the following tasks:
+
+Identify each entity in the prompt. The room of the entity can always be found in the name of the entity immediately after "light.", for example in "kitchenlamp_roof", "kitchen" is the room.
+Select only the entities that match the description in the prompt.
+Determine the desired action for each entity, taking into account its current state.
+Your answer should conform to the following JSON Template format:
+JSON Template: { "entities": [ { "id": "", "action": "" } ], "assistant": "" }
+
+In the "assistant" field, provide a natural language explanation of the actions taken.
+"""
+DUTCH_PROMPT_TEMPLATE = """
+Op basis van de gegeven prompt, moet je de relevante entiteiten identificeren in de onderstaande lijst en de juiste acties uitvoeren.
+
+Prompt: "$prompt"
+
+Entities: $entities
+
+Elke entiteit heeft een entity id, state, possible actions to perform, gescheiden door "<>".
+Gebruik deze informatie om de volgende taken uit te voeren:
 
 - Identificeer elke entiteit in de prompt. De ruimte van de entiteit is altijd te vinden in de naam van de entiteit direct na "light.", bijvoorbeeld in "keukenlamp_zijkant", is "keuken" de ruimte.
 - Kies alleen de entiteiten die overeenkomen met de omschrijving in de prompt.
-- Bepaal de gewenste actie voor elk entiteit, rekening houdend met de huidige status.
+- Bepaal de gewenste actie voor elke entiteit, rekening houdend met de huidige status.
+
+Je antwoord moet voldoen aan het volgende JSON Template formaat:
+JSON Template: { "entities": [ { "id": "", "action": "" } ], "assistant": "" }
+
+In het "assistant" veld geef je in natuurlijke taal uitleg over de uitgevoerde acties.
+"""
+COLOR_PROMPT_TEMPLATE = """
+Based on the given prompt, you need to identify the relevant entities in the list below and perform the appropriate actions.
+
+Prompt: "$prompt"
+
+Entities: $entities
+
+Each entity has an entity id, state, possible actions to perform, brightness (0-255), and HS color (Hue(0-360), Saturation(0-100)), separated by "<>".
+Use this information to complete the following tasks:
+
+Identify each entity in the prompt. The room of the entity can always be found in the name of the entity immediately after "light.", for example in "kitchenlamp_roof", "kitchen" is the room.
+Select only the entities that match the description in the prompt.
+Determine the desired action for each entity, taking into account its current state.
+Add brightness (0-255) if specified; otherwise leave blank. Note brightness descriptions such as bright or soft (this does not pertain to color).
+Add HS color as "Hue(0-360),Saturation(0-100)" if specified; otherwise leave blank.
+Your answer should conform to the following JSON Template format:
+{ "entities": [ { "id": "", "action": "", "brightness": "", "hs_color": "" } ], "assistant": "" }
+
+In the "assistant" field, provide a natural language explanation of the actions taken.
+"""
+DUTCH_COLOR_PROMPT_TEMPLATE = """
+Op basis van de gegeven prompt, moet je de relevante entiteiten identificeren in de onderstaande lijst en de juiste acties uitvoeren.
+
+Prompt: "$prompt"
+
+Entities: $entities
+
+Elke entiteit heeft een entity id, state, possible actions to perform, brightness (0-255), en HS color (Hue(0-360),Saturation(0-100)), gescheiden door "<>".
+Gebruik deze informatie om de volgende taken uit te voeren:
+
+- Identificeer elke entiteit in de prompt. De ruimte van de entiteit is altijd te vinden in de naam van de entiteit direct na "light.", bijvoorbeeld in "keukenlamp_plafond", is "keuken" de ruimte.
+- Kies alleen de entiteiten die overeenkomen met de omschrijving in de prompt.
+- Bepaal de gewenste actie voor elke entiteit, rekening houdend met de huidige status.
 - Voeg brightness (0-255) toe indien gespecificeerd; anders laat leeg. Let op brightness omschrijvingen zoals fel of zacht (dit gaat dus niet over de kleur).
 - Voeg HS color als "Hue(0-360),Saturation(0-100)" toe indien gespecificeerd; anders laat leeg.
 
 Je antwoord moet voldoen aan het volgende JSON Template formaat:
 { "entities": [ { "id": "", "action": "", "brightness": "", "hs_color": "" } ], "assistant": "" }
 
-In het "assistant" veld, geef in natuurlijke taal uitleg over de uitgevoerde acties."""
+In het "assistant" veld geef je in natuurlijke taal uitleg over de uitgevoerde acties.
+"""
 TEST_PROMPT_TEMPLATE = """
 Below is a list of devices with device id, name, state, possible actions, brightness, and HS color, delimited by "<>"
 
