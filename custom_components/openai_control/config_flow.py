@@ -146,8 +146,7 @@ def openai_config_option_schema(options: MappingProxyType[str, Any]) -> dict:
             default=DEFAULT_CHAT_MODEL,
         ): str,
         vol.Optional(
-            LANGUAGE_AND_MODE,
-            default=DEFAULT_LANGUAGE_AND_MODE,
+            LANGUAGE_AND_MODE
         ): vol.In(LANGUAGE_AND_MODE_OPTIONS),
         vol.Optional(
             CONF_MAX_TOKENS,
