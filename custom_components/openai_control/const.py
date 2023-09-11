@@ -25,7 +25,7 @@ Use this information to complete the following tasks:
 Your answer should conform to the following JSON Template format:
 JSON Template: { "entities": [ { "id": "", "action": "" } ], "assistant": "" }
 
-In the "assistant" field, provide a natural language explanation of the actions taken for the identified entity or entities.
+In the "assistant" field, provide a natural language response of the actions taken.
 """
 DUTCH_PROMPT_TEMPLATE = """
 Op basis van de gegeven prompt, moet je de relevante entiteiten identificeren in de onderstaande lijst en de juiste acties uitvoeren voor elk van hen.
@@ -43,7 +43,7 @@ Gebruik deze informatie om de volgende taken uit te voeren:
 Je antwoord moet voldoen aan het volgende JSON Template formaat:
 { "entities": [ { "id": "", "action": "" } ], "assistant": "" }
 
-In het "assistant" veld geef je in natuurlijke taal uitleg over de uitgevoerde acties voor de geïdentificeerde entiteit of entiteiten.
+In het "assistant" veld geef je in natuurlijke taal antwoord over de uitgevoerde acties.
 """
 COLOR_PROMPT_TEMPLATE = """
 Based on the given prompt, you need to identify the relevant entities in the list below and perform the appropriate actions for each.
@@ -63,7 +63,7 @@ Use this information to complete the following tasks:
 Your answer should conform to the following JSON Template format:
 { "entities": [ { "id": "", "action": "", "brightness": "", "hs_color": "" } ], "assistant": "" }
 
-In the "assistant" field, provide a natural language explanation of the actions taken for the identified entity or entities.
+In the "assistant" field, provide a natural language response of the actions taken.
 """
 DUTCH_COLOR_PROMPT_TEMPLATE = """
 Op basis van de gegeven prompt, moet je de relevante entiteiten identificeren in de onderstaande lijst en de juiste acties uitvoeren voor elk van hen.
@@ -83,7 +83,7 @@ Gebruik deze informatie om de volgende taken uit te voeren:
 Je antwoord moet voldoen aan het volgende JSON Template formaat:
 { "entities": [ { "id": "", "action": "", "brightness": "", "hs_color": "" } ], "assistant": "" }
 
-In het "assistant" veld geef je in natuurlijke taal uitleg over de uitgevoerde acties voor de geïdentificeerde entiteit of entiteiten.
+In het "assistant" veld geef je in natuurlijke taal antwoord over de uitgevoerde acties.
 """
 TEST_PROMPT_TEMPLATE = """
 Below is a list of devices with device id, name, state, possible actions, brightness, and HS color, delimited by "<>"
