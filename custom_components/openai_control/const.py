@@ -19,9 +19,9 @@ Entities: $entities
 Each entity has an entity id, state, possible actions to perform, separated by "<>".
 Use this information to complete the following tasks:
 
-- Identify the entity or entities in the prompt. The room of the entity can always be found in the name of the entity immediately after "light.", for example in "kitchenlamp_roof", "kitchen" is the room.
-- Select the entity or entities that match the description in the prompt.
+- Identify and select the entity or entities from the prompt that match the description. The room of the entity can always be found in the name of the entity immediately after "light.", for example in "kitchenlamp_ceiling", "kitchen" is the room. If a general room, such as "living room" is mentioned, then select all entities that have this room in their name.
 - Determine the desired action for each selected entity, taking into account their current state.
+
 Your answer should conform to the following JSON Template format:
 JSON Template: { "entities": [ { "id": "", "action": "" } ], "assistant": "" }
 
@@ -37,8 +37,7 @@ Entities: $entities
 Elke entiteit heeft een entity id, state, possible actions to perform, gescheiden door "<>".
 Gebruik deze informatie om de volgende taken uit te voeren:
 
-- Identificeer de entiteit of entiteiten in de prompt. De ruimte van de entiteit is altijd te vinden in de naam van de entiteit direct na "light.", bijvoorbeeld in "keukenlamp_zijkant", is "keuken" de ruimte.
-- Kies de entiteit of entiteiten die overeenkomen met de omschrijving in de prompt.
+- Identificeer en kies de entiteit of entiteiten in de prompt die overeenkomen met de omschrijving. De ruimte van de entiteit is altijd te vinden in de naam van de entiteit direct na "light.", bijvoorbeeld in "keukenlamp_plafond" is "keuken" de ruimte. Als er wordt verwezen naar een algemene ruimte zoals "woonkamer", selecteer dan alle entiteiten die deze ruimte in hun naam hebben.
 - Bepaal de gewenste actie voor elke geselecteerde entiteit, rekening houdend met hun huidige status.
 
 Je antwoord moet voldoen aan het volgende JSON Template formaat:
@@ -56,11 +55,11 @@ Entities: $entities
 Each entity has an entity id, state, possible actions to perform, brightness (0-255), and HS color (Hue(0-360), Saturation(0-100)), separated by "<>".
 Use this information to complete the following tasks:
 
-- Identify the entity or entities in the prompt. The room of the entity can always be found in the name of the entity immediately after "light.", for example in "kitchenlamp_roof", "kitchen" is the room.
-- Select the entity or entities that match the description in the prompt.
+- Identify and select the entity or entities from the prompt that match the description. The room of the entity can always be found in the name of the entity immediately after "light.", for example in "kitchenlamp_ceiling", "kitchen" is the room. If a general room, such as "living room" is mentioned, then select all entities that have this room in their name.
 - Determine the desired action for each selected entity, taking into account their current state.
 - Add brightness (0-255) if specified, otherwise leave blank. Note: "bright" is interpreted as a brightness value of 255 and "soft" can be interpreted as a lower value, for example 50.
 - Add HS color as "Hue(0-360),Saturation(0-100)" if specified, otherwise leave blank.
+
 Your answer should conform to the following JSON Template format:
 { "entities": [ { "id": "", "action": "", "brightness": "", "hs_color": "" } ], "assistant": "" }
 
@@ -76,8 +75,7 @@ Entities: $entities
 Elke entiteit heeft een entity id, state, possible actions to perform, brightness (0-255), en HS color (Hue(0-360),Saturation(0-100)), gescheiden door "<>".
 Gebruik deze informatie om de volgende taken uit te voeren:
 
-- Identificeer de entiteit of entiteiten in de prompt. De ruimte van de entiteit is altijd te vinden in de naam van de entiteit direct na "light.", bijvoorbeeld in "keukenlamp_plafond", is "keuken" de ruimte.
-- Kies de entiteit of entiteiten die overeenkomen met de omschrijving in de prompt.
+- Identificeer en kies de entiteit of entiteiten in de prompt die overeenkomen met de omschrijving. De ruimte van de entiteit is altijd te vinden in de naam van de entiteit direct na "light.", bijvoorbeeld in "keukenlamp_plafond" is "keuken" de ruimte. Als er wordt verwezen naar een algemene ruimte zoals "woonkamer", selecteer dan alle entiteiten die deze ruimte in hun naam hebben.
 - Bepaal de gewenste actie voor elke geselecteerde entiteit, rekening houdend met hun huidige status.
 - Voeg brightness (0-255) toe indien gespecificeerd, laat anders leeg. Let op: "fel" wordt geïnterpreteerd als brightness waarde van 255 en "zacht" kan worden geïnterpreteerd als een lagere waarde van bijvoorbeeld 50.
 - Voeg HS color als "Hue(0-360),Saturation(0-100)" toe indien gespecificeerd, laat anders leeg.
