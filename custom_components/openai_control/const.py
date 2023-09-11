@@ -81,7 +81,7 @@ Je antwoord moet voldoen aan het volgende JSON Template formaat:
 
 In het "assistant" veld, geef een duidelijke uitleg over de uitgevoerde acties.
 
-Voorbeeld: Als de prompt zegt "Maak de keukenlamp_zijkant zachtjes groen, de keukenlamp_midden fel rood en de keukenlamp_plafond fel geel", stel dan de juiste kleur en helderheid in voor elk van deze lichten en antwoord volgens het bovengenoemde template.
+Voorbeeld: Als de prompt zegt "Maak de keukenlamp_zijkant zachtjes groen (helderheid laag), de keukenlamp_midden fel rood (helderheid maximaal) en de keukenlamp_plafond fel geel (helderheid maximaal)", stel dan de juiste kleur en helderheid in voor elk van deze lichten en antwoord volgens het bovengenoemde template.
 """
 TEST_PROMPT_TEMPLATE = """
 Below is a list of devices with device id, name, state, possible actions, brightness, and HS color, delimited by "<>"
