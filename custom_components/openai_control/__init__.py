@@ -51,6 +51,9 @@ _LOGGER.info("Testing the logs")
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up OpenAI Agent from a config entry."""
 
+    # global language_and_mode_value
+    # language_and_mode_value = entry.options.get(LANGUAGE_AND_MODE)
+
     openai.api_key = entry.data[CONF_API_KEY]
 
     try:
@@ -93,9 +96,6 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
         self.entry = entry
         self.history: dict[str, list[dict]] = {}
 
-        global language_and_mode_value
-        language_and_mode_value = entry.options.get(LANGUAGE_AND_MODE)
-
     @property
     def attribution(self):
         """Return the attribution."""
@@ -112,6 +112,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
         
         """ Options input """
 
+        language_and_mode_value = self.entry.options.get(LANGUAGE_AND_MODE)
         _LOGGER.info("language_and_mode_value  %s ", language_and_mode_value)
 
         raw_prompt = self.entry.options.get(CONF_PROMPT, DEFAULT_PROMPT)
