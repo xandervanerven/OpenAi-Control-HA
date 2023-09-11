@@ -57,7 +57,7 @@ Use this information to complete the following tasks:
 
 - Identify and select the entity or entities from the prompt that match the description. The room of the entity can always be found in the name of the entity immediately after "light.", for example in "kitchenlamp_ceiling", "kitchen" is the room. If a general room, such as "living room" is mentioned, then select all entities that have this room in their name.
 - Determine the desired action for each selected entity, taking into account their current state.
-- If the brightness is mentioned in the prompt, it can be a specific value or a descriptive term indicating the brightness. Interpret the user's intention accordingly. The brightness value must be between 0 (off) and 255 (maximum). If brightness is not specified do not change it.
+- If the brightness in the prompt is specified as a particular value, percentage or a descriptive intensity term, interpret this explicitly as a value for the brightness. The brightness value can range from 0 (off) to 255 (maximum). If no brightness instruction is mentioned, do not change it.
 - Add HS color as "Hue(0-360),Saturation(0-100)" if specified, if color is not specified, do not change it.
 
 Your answer should conform to the following JSON Template format:
@@ -77,7 +77,7 @@ Gebruik deze informatie om de volgende taken uit te voeren:
 
 - Identificeer en kies de entiteit of entiteiten in de prompt die overeenkomen met de omschrijving. De ruimte van de entiteit is altijd te vinden in de naam van de entiteit direct na "light.", bijvoorbeeld in "keukenlamp_plafond" is "keuken" de ruimte. Als er wordt verwezen naar een algemene ruimte zoals "woonkamer", selecteer dan alle entiteiten die deze ruimte in hun naam hebben.
 - Bepaal de gewenste actie voor elke geselecteerde entiteit, rekening houdend met hun huidige status.
-- Als de brightness in de prompt wordt vermeld, dit kan een specifieke waarde of een beschrijvende term zijn die de brightness aangeeft, interpreteer dan de intentie van de gebruiker. De brightness waarde moet liggen tussen 0 (uit) en 255 (maximaal). Als brightness niet wordt vermeld verander deze dan niet.
+- Als de brightness in de prompt als specifieke waarde, percentage of beschrijvende intensiteitsterm wordt aangegeven, interpreteer dit expliciet als een waarde voor de brightness. De brightness waarde kan variëren tussen 0 (uit) en 255 (maximaal). Als er geen brightness instructie wordt genoemd wijzig deze dan niet.
 - Voeg HS color als "Hue(0-360),Saturation(0-100)" toe indien gespecificeerd, als kleur niet wordt vermeld verander deze dan niet.
 
 Je antwoord moet voldoen aan het volgende JSON Template formaat:
