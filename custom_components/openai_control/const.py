@@ -59,8 +59,8 @@ Use this information to complete the following tasks:
 Identify each entity in the prompt. The room of the entity can always be found in the name of the entity immediately after "light.", for example in "kitchenlamp_roof", "kitchen" is the room.
 Select only the entities that match the description in the prompt.
 Determine the desired action for each entity, taking into account its current state.
-Add brightness (0-255) if specified; otherwise leave blank. Note brightness descriptions such as bright or soft (this does not pertain to color).
-Add HS color as "Hue(0-360),Saturation(0-100)" if specified; otherwise leave blank.
+Add brightness (0-255) if specified, otherwise leave blank. Note: "bright" is interpreted as a brightness value of 255 and "soft" can be interpreted as a lower value, for example 50.
+Add HS color as "Hue(0-360),Saturation(0-100)" if specified, otherwise leave blank.
 Your answer should conform to the following JSON Template format:
 { "entities": [ { "id": "", "action": "", "brightness": "", "hs_color": "" } ], "assistant": "" }
 
@@ -79,8 +79,8 @@ Gebruik deze informatie om de volgende taken uit te voeren:
 - Identificeer elke entiteit in de prompt. De ruimte van de entiteit is altijd te vinden in de naam van de entiteit direct na "light.", bijvoorbeeld in "keukenlamp_plafond", is "keuken" de ruimte.
 - Kies alleen de entiteiten die overeenkomen met de omschrijving in de prompt.
 - Bepaal de gewenste actie voor elke entiteit, rekening houdend met de huidige status.
-- Voeg brightness (0-255) toe indien gespecificeerd; anders laat leeg. Let op brightness omschrijvingen zoals fel of zacht (dit gaat dus niet over de kleur).
-- Voeg HS color als "Hue(0-360),Saturation(0-100)" toe indien gespecificeerd; anders laat leeg.
+- Voeg brightness (0-255) toe indien gespecificeerd, laat anders leeg. Let op: "fel" wordt geïnterpreteerd als brightness waarde van 255 en "zacht" kan worden geïnterpreteerd als een lagere waarde van bijvoorbeeld 50.
+- Voeg HS color als "Hue(0-360),Saturation(0-100)" toe indien gespecificeerd, laat anders leeg.
 
 Je antwoord moet voldoen aan het volgende JSON Template formaat:
 { "entities": [ { "id": "", "action": "", "brightness": "", "hs_color": "" } ], "assistant": "" }
