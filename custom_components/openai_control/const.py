@@ -10,7 +10,7 @@ TEST_ENTITY_TEMPLATE = """$id<>$status<>$action<>$brightness<>$hs_color
 """
 
 PROMPT_TEMPLATE = """
-Based on the given prompt, you need to identify the relevant entities in the list below and perform the appropriate actions for each.
+Based on the given prompt you need to identify the relevant entities in the list below and perform the appropriate actions for each of them.
 
 Prompt: "$prompt"
 
@@ -28,7 +28,7 @@ JSON Template: { "entities": [ { "id": "", "action": "" } ], "assistant": "" }
 In the "assistant" field, provide a natural language response of the actions taken.
 """
 DUTCH_PROMPT_TEMPLATE = """
-Op basis van de gegeven prompt, moet je de relevante entiteiten identificeren in de onderstaande lijst en de juiste acties uitvoeren voor elk van hen.
+Op basis van de gegeven prompt moet je de relevante entiteiten identificeren in de onderstaande lijst en de passende acties uitvoeren voor elk van hen.
 
 Prompt: "$prompt"
 
@@ -46,7 +46,7 @@ Je antwoord moet voldoen aan het volgende JSON Template formaat:
 In het "assistant" veld geef je in natuurlijke taal antwoord over de uitgevoerde acties.
 """
 COLOR_PROMPT_TEMPLATE = """
-Based on the given prompt, you need to identify the relevant entities in the list below and perform the appropriate actions for each of them.
+Based on the given prompt you need to identify the relevant entities in the list below and perform the appropriate actions for each of them.
 
 Prompt: "$prompt"
 
