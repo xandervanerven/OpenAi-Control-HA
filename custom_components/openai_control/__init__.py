@@ -51,9 +51,6 @@ _LOGGER.info("Testing the logs")
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up OpenAI Agent from a config entry."""
 
-    global language_and_mode_value
-    language_and_mode_value = entry.options.get(LANGUAGE_AND_MODE)
-
     openai.api_key = entry.data[CONF_API_KEY]
 
     try:
@@ -110,7 +107,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
         self, user_input: conversation.ConversationInput
     ) -> conversation.ConversationResult:
         
-        _LOGGER.info("language_and_mode_value  %s ", language_and_mode_value)
+        _LOGGER.info("LANGUAGE_AND_MODE =  %s ", self.entry.options.get(LANGUAGE_AND_MODE))
 
         """ Options input """
 
@@ -156,26 +153,26 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
         entity_template = Template(ENTITY_TEMPLATE)
 
         # Check voor "color" modus in combinatie met taal
-        if "color" in language_and_mode_value:
+        if "color" in self.entry.options.get(LANGUAGE_AND_MODE):
             entity_template = Template(COLOR_ENTITY_TEMPLATE)
             
-            if "English" in language_and_mode_value:
+            if "English" in self.entry.options.get(LANGUAGE_AND_MODE):
                 prompt_template = Template(COLOR_PROMPT_TEMPLATE)
                 _LOGGER.info("Mode: English color mode")
-            elif "Dutch" in language_and_mode_value:
+            elif "Dutch" in self.entry.options.get(LANGUAGE_AND_MODE):
                 prompt_template = Template(DUTCH_COLOR_PROMPT_TEMPLATE)
                 _LOGGER.info("Mode: Dutch color mode")
             else:
                 _LOGGER.warning("Color mode active but unknown language.")
             
-        elif "English" in language_and_mode_value:
+        elif "English" in self.entry.options.get(LANGUAGE_AND_MODE):
             _LOGGER.info("Mode: English mode")
 
-        elif "Dutch" in language_and_mode_value:
+        elif "Dutch" in self.entry.options.get(LANGUAGE_AND_MODE):
             prompt_template = Template(DUTCH_PROMPT_TEMPLATE)
             _LOGGER.info("Mode: Dutch mode")
 
-        elif language_and_mode_value == "Test":
+        elif self.entry.options.get(LANGUAGE_AND_MODE) == "Test":
             prompt_template = Template(TEST_PROMPT_TEMPLATE)
             entity_template = Template(TEST_ENTITY_TEMPLATE)
             _LOGGER.info("Mode: Test mode")
@@ -202,7 +199,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
             if entity.options['conversation']['should_expose'] is not True:
                 continue
 
-            if "color" in language_and_mode_value:
+            if "color" in self.entry.options.get(LANGUAGE_AND_MODE):
                 # get the status string
                 status_object = self.hass.states.get(entity_id)
                 status_string = status_object.state
@@ -332,7 +329,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
                     entity_action = entity['action']
                     service_data = {'entity_id': entity_id}
                     
-                    if "color" in language_and_mode_value:
+                    if "color" in self.entry.options.get(LANGUAGE_AND_MODE):
                         status_object = self.hass.states.get(entity_id)  # Definieer status_object
 
                         if 'brightness' in entity and entity['brightness']:
