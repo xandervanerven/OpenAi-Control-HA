@@ -147,7 +147,6 @@ def openai_config_option_schema(options: MappingProxyType[str, Any]) -> dict:
         ): str,
         vol.Optional(
             LANGUAGE_AND_MODE,
-            default=DEFAULT_LANGUAGE_AND_MODE,
         ): vol.In(LANGUAGE_AND_MODE_OPTIONS),
         vol.Optional(
             CONF_MAX_TOKENS,
