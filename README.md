@@ -4,7 +4,7 @@
 </p>
 
 <h1 align="center">
-
+This fork is for testing only, please don't try to deploy it. :)
 [OpenAI Control Custom Integration](https://github.com/alanjames1987/OpenAI-Control-HA) for Home Assistant
 
 </h1>
